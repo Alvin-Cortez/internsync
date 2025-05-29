@@ -575,6 +575,9 @@ aside p {
         width: 60vw !important;
         padding: 10px !important;
     }
+    .hamburger{
+        font-size: 1.3rem;
+    }
     .logo img {
         width: 10rem !important;
     }
@@ -584,7 +587,7 @@ aside p {
         width: 100vw;
     }
     .header h1 {
-        font-size: 1.6rem !important;
+        font-size: 1.5rem !important;
         margin-left: 0.5rem;
     }
     .header-icons {
@@ -592,15 +595,12 @@ aside p {
         margin-right: 5px;
     }
     .avatar-icon img {
-        width: 30px !important;
-        height: 30px !important;
+        width: 35px !important;
+        height: 35px !important;
+        margin-top: 5px;
     }
     #notif-icon {
-        font-size: 16px;
-    }
-    .search-input {
-        width: 150px;
-        height: 25px;
+        font-size: 25px !important;
     }
     .btn.add-activity{
         width: 50px !important;
@@ -622,12 +622,13 @@ aside p {
         content: "+";
         font-size: 24px;
     }
-    .btn.add-activity {
-        width: 50px;
-        height: 50px;
-        padding: 10px;
-        font-size: 0;
-        border-radius: 10%;
+    .search-input {
+        width: 150px !important;
+        height: 20px !important;
+    }
+    .btn.add-activity{
+        width: 40px !important;
+        height: 40px !important;
     }
     .pagination {
         display: flex;
@@ -696,12 +697,18 @@ aside p {
         min-width: 0;
         flex: 1 1 0;
     }
+    .table-section{
+        padding: 30px 20px;
+    }
 }
 
 @media (min-width: 361px) and (max-width: 505px) {
     .sidebar {
         width: 60vw !important;
         padding: 10px !important;
+    }
+    .hamburger{
+        font-size: 1.3rem;
     }
     .logo img {
         width: 10rem !important;
@@ -720,19 +727,20 @@ aside p {
         margin-right: 5px;
     }
     .avatar-icon img {
-        width: 30px !important;
-        height: 30px !important;
+        width: 35px !important;
+        height: 35px !important;
+        margin-top: 5px;
     }
     #notif-icon {
-        font-size: 16px;
+        font-size: 25px !important;
     }
     .search-input {
-        width: 150px;
-        height: 25px;
+        width: 150px !important;
+        height: 20px !important;
     }
     .btn.add-activity{
-        width: 50px !important;
-        height: 45px !important;
+        width: 40px !important;
+        height: 40px !important;
     }
     .table-responsive {
         width: 100%;
@@ -751,8 +759,8 @@ aside p {
         font-size: 24px;
     }
     .btn.add-activity {
-        width: 50px;
-        height: 50px;
+        width: 40px !important;
+        height: 40px;
         padding: 10px;
         font-size: 0;
         border-radius: 10%;
@@ -823,6 +831,9 @@ aside p {
     #add-activity-modal .form-row .input-group {
         min-width: 0;
         flex: 1 1 0;
+    }
+    .table-section{
+        padding: 30px 20px;
     }
 }
 
@@ -877,25 +888,25 @@ aside p {
         font-size: 18px;
     }
     .header h1 {
-        font-size: 2rem !important;
+        font-size: 2rem;
     }
     .header-icons{
         gap: 1rem !important;
     }
     #notif-icon {
-        font-size: 1.5rem !important;
+        font-size: 1.5rem;
     }
     .avatar-icon img {
         width: 2.5rem;
         height: 2.5rem;
     }
     .search-input{
-        width: 12rem !important;
-        height: 2rem !important;
+        width: 12rem;
+        height: 1.5rem;
     }
     .btn.add-activity{
-        width: 4rem !important;
-        height: 3rem !important;
+        width: 3rem;
+        height: 3rem;
         font-size: 0px;
     }
     .btn.add-activity::before {
