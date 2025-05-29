@@ -17,15 +17,15 @@
             </div>
         </div>
         <nav class="menu">
-            <a href="index.html" class="menu-item" id="dashboard-link">
+            <a href="index.php" class="menu-item" id="dashboard-link">
                 <i class="fas fa-home"></i> Dashboard
             </a>
-            <a href="logs.html" class="menu-item" id="logs-link">
+            <a href="logs.php" class="menu-item" id="logs-link">
                 <i class="fas fa-file-alt"></i> Activity Logs
             </a>
         </nav>
         <p>&copy; Copyright 2025</p>
-        </aside>
+    </aside>
     <main class="main-content">
         <header class="header">
             <button class="hamburger" id="hamburger-btn">
@@ -39,7 +39,7 @@
                     <div class="dropdown-menu" id="profile-dropdown">
                         <ul>
                             <li>Account Settings</li>
-                            <li><a href="logout.html">Log Out</a></li>
+                            <li><a href="logout.php">Log Out</a></li>
                         </ul>
                     </div>
                 </div>
@@ -77,6 +77,16 @@
                         </thead>
                         <tbody>
                             <tr>
+                                <td>Apr 12, 2024</td>
+                                <td>5.5</td>
+                                <td>Worked on project X</td>
+                            </tr>
+                            <tr>
+                                <td>Apr 11, 2024</td>
+                                <td>5.5</td>
+                                <td>Worked on project X</td>
+                            </tr>
+                            <tr>
                                 <td>Apr 10, 2024</td>
                                 <td>5.5</td>
                                 <td>Worked on project X</td>
@@ -106,54 +116,7 @@
                 </div>
             </section>
     </main>
-    <!--Modal-->
-    <div class="modal-background" id="modal-container">
-        <div class="modal-container">
-            <img class="modal-logo" src="assets/images/logo.png" alt="InternSync Logo">
-            <span id="close-modal" onclick="closeModal()">&times;</span>
-            <div class="buttons">
-                <button type="button" class="btn-primary active" id="sign-in-btn" onclick="toggleSignIn()">Sign-In</button>
-                <button type="button" class="btn-secondary" id="sign-up-btn" onclick="toggleSignUp()">Sign Up</button>
-            </div>
-            <form action="include/signin.inc.php" method="POST">
-                <div class="form-group" id="sign-in-form">
-                    <label for="signin-username">Username</label>
-                    <input type="text" id="signin-username" name="username">
-                    <label for="signin-password">Password</label>
-                    <input type="password" id="signin-password" name="password">
-                    <button type="submit" class="btn btn-submit" name="signin-submit">Submit</button>
-                    <div class="message">
-                        <p>Don't have an account? <button type="button" onclick="toggleSignUp()">Sign Up</button></p>
-                    </div>
-                </div>
-            </form>
-            <form action="include/signup.inc.php" method="POST">
-                <div class="form-group" style="display: none;" id="sign-up-form">
-                    <label for="signup-username">Username</label>
-                    <input type="text" id="signup-username" name="username">
-                    <label for="signup-password">Password</label>
-                    <input type="password" id="signup-password" name="password">
-                    <label for="cPassword">Confirm Password</label>
-                    <input type="password" id="cPassword" name="cPass">
-                    <label for="hours" class="hours-input">Hours to Render</label>
-                    <input type="number" id="hours" name="hours" class="hours-input">
-                    <button type="submit" class="btn btn-submit" name="signup-submit">Submit</button>
-                    <div class="message">
-                        <p>Already have an account? <button type="button" onclick="toggleSignIn()">Sign In</button></p>
-                    </div>
-                </div>
-            </form>
-            <!--<div id="username-error" style="font-size: 15px; color:hsl(0, 100.00%, 50.00%);">Username has taken.</div>-->
-            <!--<div id="password-error" style="font-size: 15px; color:hsl(0, 100.00%, 50.00%);">
-                        <ul>
-                            <li>Password must be 8 characters long</li>
-                            <li>Password includes 1 uppercase and 1 lowercase</li>
-                            <li>Password includes 1 special character</li>
-                        </ul>
-                    </div>-->
-            <!--<div id="username-error" style="font-size: 15px; color:hsl(0, 100.00%, 50.00%);">Password do not match.</div>-->
-        </div>
-    </div>
+    <?php include 'include/modal.php';?>
     <script src="assets/js/index.js"></script>
 </body>
 </html>
