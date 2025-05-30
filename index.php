@@ -1,3 +1,5 @@
+<?php session_start(); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,11 +37,15 @@
             <div class="header-icons">
                 <i class="fas fa-bell notification" id="notif-icon"></i>
                 <div class="avatar-icon">
-                    <img src="assets/images/profile-icon.png" alt="User Avatar" id="profile-icon" onclick="openModal()">
+                    <?php if(!isset($_SESSION['user_id'])): ?>
+                        <img src="assets/images/profile-icon.png" alt="User Avatar" id="profile-icon" onclick="openModal()">
+                    <?php else: ?>
+                        <img src="assets/images/profile-icon.png" alt="User Avatar" id="profile-icon" onclick="toggleProfileDropdown()">
+                    <?php endif;?>
                     <div class="dropdown-menu" id="profile-dropdown">
                         <ul>
                             <li>Account Settings</li>
-                            <li><a href="logout.php">Log Out</a></li>
+                            <li><a href="include/logout.php">Log Out</a></li>
                         </ul>
                     </div>
                 </div>

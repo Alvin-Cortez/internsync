@@ -6,7 +6,7 @@ class AuthController extends Auth{
     private $cPass;
     private $hours;
 
-    public function __construct($user, $pass, $cPass, $hours)
+    public function __construct($user, $pass, $cPass = null, $hours = null)
     {
         $this->user = $user;
         $this->pass = $pass;
@@ -14,8 +14,9 @@ class AuthController extends Auth{
         $this->hours = $hours;
     }
 
+    /* SIGN UP FUNCTIONALITY */
     public function signUp(){
-        if($this->isEmpty() == false){
+        if($this->isSignUpEmpty() == false){
             header('location:../index.php?error=allFieldseuired');
             exit();
         }
@@ -36,7 +37,7 @@ class AuthController extends Auth{
 
     }
 
-    private function isEmpty(){
+    private function isSignUpEmpty(){
         if(empty($this->user) || empty($this->pass) || empty($this->cPass) || empty($this->hours)){
             return false;
         }
@@ -59,5 +60,22 @@ class AuthController extends Auth{
 
     private function usernameHasTaken(){
         return $this->checkUser($this->user);
+    }
+
+    /* SIGN IN FUNCTIONALITY */
+    public function signIn(){
+        if($this->isSignInEmpty() == false){
+            header('location:../index.php?error=emptyFields');
+            exit();
+        }
+
+        return $this->getUser($this->user, $this->pass);
+    }
+
+    private function isSignInEmpty(){
+        if(empty($this->user) || empty($this->pass)){
+            return false;
+        }
+        return true;
     }
 }
