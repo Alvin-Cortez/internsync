@@ -1,4 +1,9 @@
-<?php session_start(); ?>
+<?php 
+    session_start();
+    include 'class/Db.php';
+    include 'class/UserActivity.php';
+    $data = new userActivity();
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -55,18 +60,40 @@
                 <div class="cards">
                     <div class="card">
                         <i class="fas fa-clock"></i>
-                        <h3>Rendered Hours</h3>
-                        <p>5.5 hrs</p>
+                        <h3>Required Hours</h3>
+                        <?php
+                            if(isset($_SESSION['user_id'])){
+                                $renderedHours = $data->getUserRequiredHours($_SESSION['user_id']);
+                                echo "<p>" .$renderedHours ." hrs</p>";
+                            } else{
+                                echo "<p> -- hrs </p>";
+                            }
+                        ?>
                     </div>
                     <div class="card">
                         <i class="fas fa-hourglass-half"></i>
                         <h3>Total Time Spent</h3>
-                        <p>22.0 hrs</p>
+                        <?php
+                            if(isset($_SESSION['user_id'])){
+                                $spentHours = $data->totalTimeSpent($_SESSION['user_id']);
+                                echo "<p>" .$spentHours ." hrs</p>";
+                            } else {
+                                echo "<p> -- hrs </p>";
+                            }
+                            
+                        ?>
                     </div>
                     <div class="card">
                         <i class="fas fa-hourglass-end"></i>
                         <h3>Remaining Time</h3>
-                        <p>2.5 hrs</p>
+                        <?php 
+                            if(isset($_SESSION['user_id'])){
+                                $remaining = $data->getRemainingTime($_SESSION['user_id']);
+                                echo "<p>" .$remaining ." hrs</p>";
+                            } else {
+                                echo "<p> -- hrs </p>";
+                            }      
+                        ?>
                     </div>
                 </div>
         
@@ -82,41 +109,24 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Apr 12, 2024</td>
-                                <td>5.5</td>
-                                <td>Worked on project X</td>
-                            </tr>
-                            <tr>
-                                <td>Apr 11, 2024</td>
-                                <td>5.5</td>
-                                <td>Worked on project X</td>
-                            </tr>
-                            <tr>
-                                <td>Apr 10, 2024</td>
-                                <td>5.5</td>
-                                <td>Worked on project X</td>
-                            </tr>
-                            <tr>
-                                <td>Apr 9, 2024</td>
-                                <td>6.0</td>
-                                <td>Client meeting</td>
-                            </tr>
-                            <tr>
-                                <td>Apr 8, 2024</td>
-                                <td>4.0</td>
-                                <td>Code review</td>
-                            </tr>
-                            <tr>
-                                <td>Apr 7, 2024</td>
-                                <td>6.5</td>
-                                <td>Developed new feature</td>
-                            </tr>
-                            <tr>
-                                <td>Apr 6, 2024</td>
-                                <td>5.0</td>
-                                <td>Team collaboration</td>
-                            </tr>
+                            <?php
+                                if(isset($_SESSION['user_id'])){
+                                    $activity = new userActivity();
+                                    $logs = $activity->getRecentLogs($_SESSION['user_id']);
+                                    foreach($logs as $log){
+                                        echo "<tr>";
+                                        echo "<td>". htmlspecialchars(date('M d Y', strtotime($log['date']))) ."</td>";
+                                        $hours = floatval($log['totalHours']);
+                                        echo "<td>";
+                                        echo ($hours == intval($hours)) ? intval($hours) : $hours;
+                                        echo "</td>";
+                                        echo "<td>". htmlspecialchars($log['activity']) . "</td>";
+                                        echo "</tr>";
+                                    }
+                                } else {
+                                    echo "<td colspan=3>Sign in first to display your progress</td>";
+                                }
+                            ?>
                         </tbody>
                     </table>
                 </div>

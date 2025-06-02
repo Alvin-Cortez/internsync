@@ -66,69 +66,28 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>04/9/2024</td>
-                                <td>9:00 AM</td>
-                                <td>8:30 AM</td>
-                                <td>7.5</td>
-                                <td>Worked on project tasks</td>
-                            </tr>
-                            <tr>
-                                <td>04/9/2024</td>
-                                <td>9:00 AM</td>
-                                <td>8:30 AM</td>
-                                <td>7.5</td>
-                                <td>Worked on project tasks</td>
-                            </tr>
-                            <tr>
-                                <td>04/9/2024</td>
-                                <td>9:00 AM</td>
-                                <td>8:30 AM</td>
-                                <td>7.5</td>
-                                <td>Worked on project tasks</td>
-                            </tr>
-                            <tr>
-                                <td>04/9/2024</td>
-                                <td>9:00 AM</td>
-                                <td>8:30 AM</td>
-                                <td>7.5</td>
-                                <td>Worked on project tasks</td>
-                            </tr>
-                            <tr>
-                                <td>04/9/2024</td>
-                                <td>9:00 AM</td>
-                                <td>8:30 AM</td>
-                                <td>7.5</td>
-                                <td>Worked on project tasks</td>
-                            </tr>
-                            <tr>
-                                <td>04/9/2024</td>
-                                <td>9:00 AM</td>
-                                <td>8:30 AM</td>
-                                <td>7.5</td>
-                                <td>Worked on project tasks</td>
-                            </tr>
-                            <tr>
-                                <td>04/9/2024</td>
-                                <td>9:00 AM</td>
-                                <td>8:30 AM</td>
-                                <td>7.5</td>
-                                <td>Worked on project tasks</td>
-                            </tr>
-                            <tr>
-                                <td>04/9/2024</td>
-                                <td>9:00 AM</td>
-                                <td>8:30 AM</td>
-                                <td>7.5</td>
-                                <td>Worked on project tasks</td>
-                            </tr>
-                            <tr>
-                                <td>04/9/2024</td>
-                                <td>9:00 AM</td>
-                                <td>8:30 AM</td>
-                                <td>7.5</td>
-                                <td>Worked on project tasks</td>
-                            </tr>
+                            <?php
+                                if(isset($_SESSION['user_id'])){
+                                    include 'class/Db.php';
+                                    include 'class/UserActivity.php';
+                                    $activity = new userActivity();
+                                    $logs = $activity->getAllLogsByUser($_SESSION['user_id']);
+                                    foreach($logs as $log){
+                                        echo "<tr>";
+                                        echo "<td>". htmlspecialchars(date('M d Y', strtotime($log['date']))) . "</td>";
+                                        echo "<td>". htmlspecialchars(date('g:i a', strtotime($log['timeIn']))) . "</td>";
+                                        echo "<td>". htmlspecialchars(date('g:i a', strtotime($log['timeOut']))) . "</td>";
+                                        $hours = floatval($log['totalHours']);
+                                        echo "<td>";
+                                        echo ($hours == intval($hours)) ? intval($hours) : $hours;
+                                        echo "</td>";
+                                        echo "<td>". htmlspecialchars($log['activity']) . "</td>";
+                                        echo "<tr>";
+                                    }
+                                } else {
+                                    echo "<td colspan=5>Sign in first to display your progress</td>";
+                                }
+                            ?>
                         </tbody>
                     </table>
                 </div>

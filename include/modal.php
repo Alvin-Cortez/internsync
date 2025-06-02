@@ -52,25 +52,25 @@
         <div class="modal-container">
             <span onclick="closeAddActivityModal()" style="position:absolute;top:10px;right:20px;font-size:30px;cursor:pointer;color:#969696;">&times;</span>
             <h2 style="color:#fff;margin-bottom:20px;">Add Activity</h2>
-            <form id="add-activity-form">
+            <form action="include/logs.php" id="add-activity-form" method="post">
                 <div class="form-group">
                     <div class="form-row">
                         <div class="input-group">
                             <label for="activity-date">Date</label>
-                            <input type="date" id="activity-date" name="date" required>
+                            <input type="date" id="activity-date" name="date">
                         </div>
                         <div class="input-group">
                             <label for="activity-time-in">Time In</label>
-                            <input type="time" id="activity-time-in" name="time_in" required>
+                            <input type="time" id="activity-time-in" name="time-in">
                         </div>
                         <div class="input-group">
                             <label for="activity-time-out">Time Out</label>
-                            <input type="time" id="activity-time-out" name="time_out" required>
+                            <input type="time" id="activity-time-out" name="time-out">
                         </div>
                     </div>
                     <div class="activity-desc-group">
                         <label for="activity-desc">Activity Description</label>
-                        <input type="text" id="activity-desc" name="activity" maxlength="100" required>
+                        <input type="text" id="activity-desc" name="activity" maxlength="100">
                     </div>
                     <button type="submit" class="btn btn-submit" style="margin-top:10px;">Submit</button>
                 </div>
