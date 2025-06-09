@@ -1,73 +1,49 @@
-/* ACTIVE */
-document.getElementById('dashboard-link').classList.add('active');
+// Live clock
+function updateCurrentTime() {
+    const now = new Date();
+    let h = now.getHours();
+    const m = now.getMinutes().toString().padStart(2, '0');
+    const s = now.getSeconds().toString().padStart(2, '0');
+    const ampm = h >= 12 ? 'PM' : 'AM';
+    h = h % 12 || 12;
+    document.getElementById('currentTime').textContent = `${h}:${m}:${s} ${ampm}`;
+}
+setInterval(updateCurrentTime, 1000);
+updateCurrentTime();
 
-/* SIDEBAR TOGGLE */
-const hamburgerBtn = document.getElementById('hamburger-btn');
-hamburgerBtn.addEventListener('click', function () {
-    document.getElementById('sidebar').classList.toggle('visible');
-    document.querySelector('.main-content').classList.toggle('overlay');
-});
+// Timer logic
+let timer = 0, interval = null, clockedIn = false;
+const timerEl = document.getElementById('activityTimer');
+const statusEl = document.getElementById('activityStatus');
+const clockInBtn = document.getElementById('clockInBtn');
+const clockOutBtn = document.getElementById('clockOutBtn');
+const descInput = document.getElementById('activityDesc');
 
-const closeBtn = document.getElementById('close-btn');
-closeBtn.addEventListener('click', function () {
-    document.getElementById('sidebar').classList.remove('visible');
-    document.querySelector('.main-content').classList.remove('overlay');
-});
-
-/* MODAL FUNCTIONALITY */
-const modal = document.getElementById("modal-container");
-
-function openModal() {
-    modal.style.display = "flex";
-    document.querySelector('.main-content').classList.add('blurred');
-    document.querySelector('.sidebar').classList.add('blurred');
+function formatTimer(sec) {
+    const h = Math.floor(sec / 3600).toString().padStart(2, '0');
+    const m = Math.floor((sec % 3600) / 60).toString().padStart(2, '0');
+    const s = (sec % 60).toString().padStart(2, '0');
+    return `${h}:${m}:${s}`;
 }
 
-function closeModal(){
-    modal.style.display = "none";
-    document.querySelector('.main-content').classList.remove('blurred');
-    document.querySelector('.sidebar').classList.remove('blurred');
-}
-
-window.addEventListener("click", (event) => {
-    if (event.target === modal) {
-        modal.style.display = "none";
-        document.querySelector('.main-content').classList.remove('blurred');
-        document.querySelector('.sidebar').classList.remove('blurred');
-    }
-})
-
-/* SIGN UP / SIGN IN TOGGLE */
-const signUpBtn = document.getElementById("sign-up-btn");
-const signInBtn = document.getElementById("sign-in-btn");
-const signUpForm = document.getElementById("sign-up-form");
-const signInForm = document.getElementById("sign-in-form");
-
-function toggleSignUp(){
-    signUpForm.style.display = "flex"
-    signInForm.style.display = "none";
-    signUpBtn.classList.add("active");
-    signInBtn.classList.remove("active");
-}
-
-function toggleSignIn(){
-    signInForm.style.display = "flex";
-    signUpForm.style.display = "none";
-    signInBtn.classList.add("active");
-    signUpBtn.classList.remove("active");
-}
-
-/* ACCOUNT DROPDOWN */
-
-const profileDropdown = document.getElementById('profile-dropdown');
-const profileIcon = document.getElementById('profile-icon');
-
-function toggleProfileDropdown() {
-    profileDropdown.style.display = profileDropdown.style.display === 'block' ? 'none' : 'block';
-}
-
-window.addEventListener('click', (event) => {
-    if (event.target !== profileDropdown && event.target !== profileIcon) {
-        profileDropdown.style.display = 'none';
-    }
-});
+clockInBtn.onclick = function() {
+    if (clockedIn) return;
+    clockedIn = true;
+    statusEl.textContent = 'Clocked in';
+    timerEl.style.color = '#4f46e5';
+    descInput.disabled = true;
+    interval = setInterval(() => {
+        timer++;
+        timerEl.textContent = formatTimer(timer);
+    }, 1000);
+};
+clockOutBtn.onclick = function() {
+    if (!clockedIn) return;
+    clockedIn = false;
+    statusEl.textContent = 'Not clocked in';
+    timerEl.style.color = '#4f46e5';
+    descInput.disabled = false;
+    clearInterval(interval);
+    timer = 0;
+    timerEl.textContent = '00:00:00';
+};

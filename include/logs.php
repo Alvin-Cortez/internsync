@@ -1,5 +1,6 @@
 <?php 
 
+session_start();
 if($_SERVER['REQUEST_METHOD']){
     $date = $_POST['date'];
     $timeIn = $_POST['time-in'];

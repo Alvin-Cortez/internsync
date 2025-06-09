@@ -40,7 +40,6 @@
             </button>
             <h1>Dashboard</h1>
             <div class="header-icons">
-                <i class="fas fa-bell notification" id="notif-icon"></i>
                 <div class="avatar-icon">
                     <?php if(!isset($_SESSION['user_id'])): ?>
                         <img src="assets/images/profile-icon.png" alt="User Avatar" id="profile-icon" onclick="openModal()">
@@ -76,7 +75,8 @@
                         <?php
                             if(isset($_SESSION['user_id'])){
                                 $spentHours = $data->totalTimeSpent($_SESSION['user_id']);
-                                echo "<p>" .$spentHours ." hrs</p>";
+                                if($spentHours == 0){echo "<p> 0 hrs</p>";} else {
+                                echo "<p>" .$spentHours ." hrs</p>";}
                             } else {
                                 echo "<p> -- hrs </p>";
                             }

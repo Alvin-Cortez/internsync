@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="logs.css">
+    <title>InternSync</title>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-left">
+            <svg width="35" height="35" viewBox="0 0 28 28" fill="#4F46E5">
+                <circle cx="14" cy="14" r="12" stroke="#4F46E5" stroke-width="3"/>
+                <rect x="13" y="7" width="2" height="8" rx="1" fill="#ffffff"/>
+                <rect x="14" y="14" width="6" height="2" rx="1" fill="#ffffff" transform="rotate(45 14 14)"/>
+            </svg>
+            <span class="logo-text">InternSync</span>
+            <div class="nav-links">
+                <a href="index.html">Dashboard</a>
+                <a href="logs.html" class="active">Activity Logs</a>
+            </div>
+        </div>
+        <div class="nav-right">
+            <span class="user-name">John Doe</span>
+            <img src="profile-icon.png" alt="profile-icon" class="user-avatar">
+            <a href="#" class="logout-link">Logout</a>
+        </div>
+    </nav>
+
+    <main>
+        <div class="logs-container">
+            <h2 class="logs-title">Activity Logs</h2>
+            <div class="logs-subtitle">View and manage all your tracked activities</div>
+            <div class="logs-card">
+                <div class="logs-filters">
+                    <div>
+                        <label class="logs-label">Date Range</label>
+                        <select class="logs-select">
+                            <option>This Week</option>
+                            <option>Last Week</option>
+                            <option>This Month</option>
+                            <option>Last Month</option>
+                            <option>Custom</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="logs-label">Activity Type</label>
+                        <select class="logs-select">
+                            <option>All Activities</option>
+                            <option>Meeting</option>
+                            <option>Development</option>
+                            <option>Research</option>
+                        </select>
+                    </div>
+                    <button class="logs-filter-btn">Apply Filters</button>
+                    <div class="logs-actions">
+                        <button class="logs-add-btn" onclick="addActivity()">Add Activity</button>
+                        <button class="logs-export-btn">Export Report</button>
+                    </div>
+                </div>
+                <table class="logs-table">
+                    <thead>
+                        <tr>
+                            <th>DATE</th>
+                            <th>TIME IN</th>
+                            <th>TIME OUT</th>
+                            <th>HOURS</th>
+                            <th>ACTIVITY</th>
+                            <th>ACTIONS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>2023-06-15</td>
+                            <td>09:00 AM</td>
+                            <td>11:30 AM</td>
+                            <td>2.5</td>
+                            <td>Research on project requirements</td>
+                            <td>
+                                <a href="#" class="logs-edit">Edit</a>
+                                <a href="#" class="logs-delete">Delete</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2023-06-15</td>
+                            <td>01:00 PM</td>
+                            <td>04:00 PM</td>
+                            <td>3.0</td>
+                            <td>Team meeting and documentation</td>
+                            <td>
+                                <a href="#" class="logs-edit">Edit</a>
+                                <a href="#" class="logs-delete">Delete</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2023-06-14</td>
+                            <td>10:00 AM</td>
+                            <td>05:00 PM</td>
+                            <td>7.0</td>
+                            <td>Development work on frontend</td>
+                            <td>
+                                <a href="#" class="logs-edit">Edit</a>
+                                <a href="#" class="logs-delete">Delete</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2023-06-13</td>
+                            <td>09:30 AM</td>
+                            <td>04:30 PM</td>
+                            <td>7.0</td>
+                            <td>Backend API integration</td>
+                            <td>
+                                <a href="#" class="logs-edit">Edit</a>
+                                <a href="#" class="logs-delete">Delete</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2023-06-12</td>
+                            <td>10:00 AM</td>
+                            <td>06:00 PM</td>
+                            <td>8.0</td>
+                            <td>UI design and prototyping</td>
+                            <td>
+                                <a href="#" class="logs-edit">Edit</a>
+                                <a href="#" class="logs-delete">Delete</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2023-06-09</td>
+                            <td>09:00 AM</td>
+                            <td>05:30 PM</td>
+                            <td>8.5</td>
+                            <td>Client meeting and requirement gathering</td>
+                            <td>
+                                <a href="#" class="logs-edit">Edit</a>
+                                <a href="#" class="logs-delete">Delete</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2023-06-09</td>
+                            <td>09:00 AM</td>
+                            <td>05:30 PM</td>
+                            <td>8.5</td>
+                            <td>Client meeting and requirement gathering</td>
+                            <td>
+                                <a href="#" class="logs-edit">Edit</a>
+                                <a href="#" class="logs-delete">Delete</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2023-06-09</td>
+                            <td>09:00 AM</td>
+                            <td>05:30 PM</td>
+                            <td>8.5</td>
+                            <td>Client meeting and requirement gathering</td>
+                            <td>
+                                <a href="#" class="logs-edit">Edit</a>
+                                <a href="#" class="logs-delete">Delete</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2023-06-09</td>
+                            <td>09:00 AM</td>
+                            <td>05:30 PM</td>
+                            <td>8.5</td>
+                            <td>Client meeting and requirement gathering</td>
+                            <td>
+                                <a href="#" class="logs-edit">Edit</a>
+                                <a href="#" class="logs-delete">Delete</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2023-06-09</td>
+                            <td>09:00 AM</td>
+                            <td>05:30 PM</td>
+                            <td>8.5</td>
+                            <td>Client meeting and requirement gathering</td>
+                            <td>
+                                <a href="#" class="logs-edit">Edit</a>
+                                <a href="#" class="logs-delete">Delete</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="logs-pagination">
+                    <span>Showing 1 to 10 of 24 results</span>
+                    <div class="logs-pagination-btns">
+                        <button>&lt;</button>
+                        <button>1</button>
+                        <button class="active">2</button>
+                        <button>3</button>
+                        <span>...</span>
+                        <button>8</button>
+                        <button>&gt;</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <div class="modal-overlay" id="addActivityModal" style="display: none;">
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Close">&times;</button>
+            <h3 class="modal-title">Add New Activity</h3>
+            <form class="modal-form">
+            <label class="modal-label" for="modal-date">Date</label>
+            <input type="text" id="modal-date" class="modal-input" placeholder="dd/mm/yyyy" autocomplete="off">
+
+            <div class="modal-row">
+                <div>
+                <label class="modal-label" for="modal-time-in">Time In</label>
+                <input type="text" id="modal-time-in" class="modal-input" placeholder="--:-- --">
+                </div>
+                <div>
+                <label class="modal-label" for="modal-time-out">Time Out</label>
+                <input type="text" id="modal-time-out" class="modal-input" placeholder="--:-- --">
+                </div>
+            </div>
+
+            <label class="modal-label" for="modal-desc">Activity Description</label>
+            <textarea id="modal-desc" class="modal-textarea" placeholder="Describe your activity"></textarea>
+
+            <div class="modal-actions">
+                <button type="button" class="modal-cancel">Cancel</button>
+                <button type="submit" class="modal-save">Save Activity</button>
+            </div>
+            </form>
+        </div>
+    </div>
+    <script src="logs.js"></script>
+</body>
+</html>

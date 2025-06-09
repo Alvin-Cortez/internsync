@@ -1,4 +1,9 @@
-<?php session_start(); ?>
+<?php 
+    session_start();
+    include 'class/Db.php';
+    include 'class/UserActivity.php';
+    $activity = new userActivity();    
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -34,7 +39,6 @@
                 </button>
                 <h1>Activity Logs</h1>
                 <div class="header-icons">
-                    <i class="fas fa-bell notification" id="notif-icon"></i>
                     <div class="avatar-icon">
                         <?php if(!isset($_SESSION['user_id'])): ?>
                             <img src="assets/images/profile-icon.png" alt="User Avatar" id="profile-icon" onclick="openModal()">
@@ -68,9 +72,6 @@
                         <tbody>
                             <?php
                                 if(isset($_SESSION['user_id'])){
-                                    include 'class/Db.php';
-                                    include 'class/UserActivity.php';
-                                    $activity = new userActivity();
                                     $logs = $activity->getAllLogsByUser($_SESSION['user_id']);
                                     foreach($logs as $log){
                                         echo "<tr>";
@@ -91,7 +92,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="pagination">
+                <div class="pagination" style="display: none">
                     <button class="prev">Previous</button>
                     <button class="page active">1</button>
                     <button class="page">2</button>

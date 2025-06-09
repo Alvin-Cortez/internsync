@@ -2,7 +2,6 @@
 
 class userActivity extends Db{
     protected function createActivity($date, $timeIn, $timeOut, $activity){
-        session_start();
         $id = $_SESSION['user_id'];
         $start = new DateTime($timeIn);
         $end = new DateTime($timeOut);
@@ -28,7 +27,7 @@ class userActivity extends Db{
     }
 
     public function getAllLogsByUser($userId){
-        $stmt = $this->connect()->prepare('SELECT * FROM logs WHERE userId = ?;');
+        $stmt = $this->connect()->prepare('SELECT * FROM logs WHERE userId = ? ORDER BY date DESC;');
         $stmt->execute([$userId]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -58,5 +57,4 @@ class userActivity extends Db{
         $timeSpent = $this->totalTimeSpent($userId);
         return $requiredHours - $timeSpent;
     }
-
 }
