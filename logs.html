@@ -17,7 +17,7 @@
             </svg>
             <span class="logo-text">InternSync</span>
             <div class="nav-links">
-                <a href="index.html">Dashboard</a>
+                <a href="dashboard.html">Dashboard</a>
                 <a href="logs.html" class="active">Activity Logs</a>
             </div>
         </div>
@@ -77,9 +77,9 @@
                             <td>11:30 AM</td>
                             <td>2.5</td>
                             <td>Research on project requirements</td>
-                            <td>
-                                <a href="#" class="logs-edit">Edit</a>
-                                <a href="#" class="logs-delete">Delete</a>
+                            <td class="logs-actions">
+                                <p class="logs-edit" onclick="editActvity()">Edit</p>
+                                <p class="logs-delete">Delete</p>
                             </td>
                         </tr>
                         <tr>
@@ -88,9 +88,9 @@
                             <td>04:00 PM</td>
                             <td>3.0</td>
                             <td>Team meeting and documentation</td>
-                            <td>
-                                <a href="#" class="logs-edit">Edit</a>
-                                <a href="#" class="logs-delete">Delete</a>
+                            <td class="logs-actions">
+                                <p class="logs-edit" onclick="editActvity()">Edit</p>
+                                <p class="logs-delete">Delete</p>
                             </td>
                         </tr>
                         <tr>
@@ -99,9 +99,9 @@
                             <td>05:00 PM</td>
                             <td>7.0</td>
                             <td>Development work on frontend</td>
-                            <td>
-                                <a href="#" class="logs-edit">Edit</a>
-                                <a href="#" class="logs-delete">Delete</a>
+                            <td class="logs-actions">
+                                <p class="logs-edit" onclick="editActvity()">Edit</p>
+                                <p class="logs-delete">Delete</p>
                             </td>
                         </tr>
                         <tr>
@@ -198,10 +198,42 @@
             </div>
         </div>
     </main>
+    <!--Add Activity Modal-->
     <div class="modal-overlay" id="addActivityModal" style="display: none;">
         <div class="modal-content">
-            <button class="modal-close" aria-label="Close">&times;</button>
+            <button class="modal-close" aria-label="Close" onclick="closeAddModal()">&times;</button>
             <h3 class="modal-title">Add New Activity</h3>
+            <form class="modal-form">
+            <label class="modal-label" for="modal-date">Date</label>
+            <input type="text" id="modal-date" class="modal-input" placeholder="dd/mm/yyyy" autocomplete="off">
+
+            <div class="modal-row">
+                <div>
+                <label class="modal-label" for="modal-time-in">Time In</label>
+                <input type="text" id="modal-time-in" class="modal-input" placeholder="--:-- --">
+                </div>
+                <div>
+                <label class="modal-label" for="modal-time-out">Time Out</label>
+                <input type="text" id="modal-time-out" class="modal-input" placeholder="--:-- --">
+                </div>
+            </div>
+
+            <label class="modal-label" for="modal-desc">Activity Description</label>
+            <textarea id="modal-desc" class="modal-textarea" placeholder="Describe your activity"></textarea>
+
+            <div class="modal-actions">
+                <button type="button" class="modal-cancel">Cancel</button>
+                <button type="submit" class="modal-save">Save Activity</button>
+            </div>
+            </form>
+        </div>
+    </div>
+
+    <!--Edit Activity Modal-->
+    <div class="modal-overlay" id="editActivityModal" style="display: none;">
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Close" onclick="closeEditModal()">&times;</button>
+            <h3 class="modal-title">Edit New Activity</h3>
             <form class="modal-form">
             <label class="modal-label" for="modal-date">Date</label>
             <input type="text" id="modal-date" class="modal-input" placeholder="dd/mm/yyyy" autocomplete="off">

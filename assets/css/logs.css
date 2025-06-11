@@ -196,14 +196,20 @@ main {
   font-size: 1rem;
   border-bottom: 1px solid #f3f4f6;
 }
+.logs-actions{
+  display: flex;
+  gap: 8px;
+}
 .logs-edit {
   color: #4f46e5;
   font-weight: 500;
   margin-right: 12px;
+  cursor: pointer;
 }
 .logs-delete {
   color: #ef4444;
   font-weight: 500;
+  cursor: pointer;
 }
 .logs-pagination {
   display: flex;
