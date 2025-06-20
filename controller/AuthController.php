@@ -1,81 +1,101 @@
-<?php 
+<?php
 
 class AuthController extends Auth{
-    private $user;
-    private $pass;
-    private $cPass;
-    private $hours;
 
-    public function __construct($user, $pass, $cPass = null, $hours = null)
-    {
-        $this->user = $user;
-        $this->pass = $pass;
-        $this->cPass = $cPass;
-        $this->hours = $hours;
-    }
-
-    /* SIGN UP FUNCTIONALITY */
-    public function signUp(){
-        if($this->isSignUpEmpty() == false){
-            header('location:../index.php?error=allFieldseuired');
-            exit();
-        }
-        if($this->isPasswordMatch() == false){
-            header('location:../index.php?error=passwordNotMatch');
-            exit();
-        }
-        if($this->isValidNumber() == false){
-            header('location:../index.php?error=hoursNotValidNumber');
-            exit();
-        }
-        if($this->usernameHasTaken() == false){
-            header('location:../index.php?error=usernameHasTaken');
-            exit();
-        }
-
-        return $this->createUser($this->user, $this->pass, $this->hours);
-
-    }
-
-    private function isSignUpEmpty(){
-        if(empty($this->user) || empty($this->pass) || empty($this->cPass) || empty($this->hours)){
-            return false;
-        }
-        return true;
-    }
-
-    private function isPasswordMatch(){
-        if($this->pass !== $this->cPass){
-            return false;
-        }
-        return true;
-    }
-
-    private function isValidNumber(){
-        if(!is_numeric($this->hours) || $this->hours <=0){
-            return false;
-        }
-        return true;
-    }
-
-    private function usernameHasTaken(){
-        return $this->checkUser($this->user);
+    public function index(){
+        return require 'views/index.php';
     }
 
     /* SIGN IN FUNCTIONALITY */
-    public function signIn(){
-        if($this->isSignInEmpty() == false){
-            header('location:../index.php?error=emptyFields');
+    public function signIn($data){
+        $email = $data['email'];
+        $pass = $data['pass'];
+
+        if($this->isSignInEmpty($email, $pass) == false){
+            header('location:index.php?error=emptyFields');
             exit();
         }
 
-        return $this->getUser($this->user, $this->pass);
+        return $this->getUser($email, $pass);
     }
 
-    private function isSignInEmpty(){
-        if(empty($this->user) || empty($this->pass)){
+    private function isSignInEmpty($email, $pass){
+        if(empty($email) || empty($pass)){
             return false;
         }
         return true;
+    }
+
+    /* SIGN UP FUNCTIONALITY */
+
+    public function signUp($data){
+        $fname = $data['firstName'];
+        $lname = $data['lastName'];
+        $email = $data['regEmail'];
+        $hours = $data['requiredHours'];
+        $pass = $data['regPassword'];
+        $confirm = $data['confirmPassword'];
+
+        if($this->isSignUpEmpty($fname, $lname, $email, $hours, $pass, $confirm) == false){
+            header('Location: index.php?error=allFieldseuired');
+            exit();
+        }
+        if($this->isPasswordMatch($pass, $confirm) == false){
+            header('Location: index.php?error=passwordNotMatch');
+            exit();
+        }
+        if($this->isValidNumber($hours) == false){
+            header('Location: index.php?error=hoursNotValidNumber');
+            exit();
+        }
+        if($this->isValidEmail($email) == false){
+            header('Location: index.php?error=invalidemail');
+            exit();
+        }
+        if($this->usernameHasTaken($email) == false){
+            header('Location: index.php?error=emailHasTaken');
+            exit();
+        }
+        return $this->createUser($fname, $lname, $email, $hours, $pass);
+    }
+
+    public function logout() {
+        session_start();
+        session_unset();
+        session_destroy();
+        header('Location: index.php');
+        exit();
+    }
+
+    private function isSignUpEmpty($fname, $lname, $email, $hours, $pass, $confirm): bool{
+        if(empty($fname) || empty($lname) || empty($email) || empty($hours) || empty($pass) || empty($confirm)){
+            return false;
+        }
+        return true;
+    }
+
+    private function isPasswordMatch($pass, $confirm){
+        if($pass !== $confirm){
+            return false;
+        }
+        return true;
+    }
+
+    private function isValidNumber($hours){
+        if(!is_numeric($hours) || $hours <=0){
+            return false;
+        }
+        return true;
+    }
+
+    private function isValidEmail($email){
+        if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+            return false;
+        }
+        return true;
+    }
+
+    private function usernameHasTaken($email){
+        return $this->checkUser($email);
     }
 }

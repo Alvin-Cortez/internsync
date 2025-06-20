@@ -218,6 +218,60 @@ body {
     gap: 10px;
 }
 
+.register-names-row {
+    display: flex;
+    gap: 10px;
+}
+
+.signup-form label {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #1e293b;
+    display: block;
+}
+
+.signup-form input[type="email"],
+.signup-form input[type="password"],
+.signup-form input[type="number"] {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 1rem;
+    margin-bottom: 0px;
+    background: #fafbff;
+    color: #1e293b;
+    outline: none;
+    transition: border 0.2s;
+}
+
+.register-names-row label {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #1e293b;
+    display: block;
+}
+
+.register-names-row input[type="text"] {
+    width: 10.3rem;
+    padding: 12px 14px;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 1rem;
+    margin-top: 10px;
+    background: #fafbff;
+    color: #1e293b;
+    outline: none;
+    transition: border 0.2s;
+}
+
+.signup-form input[type="email"]:focus,
+.signup-form input[type="password"]:focus,
+.signup-form input[type="text"]:focus,
+.signup-form input[type="number"]:focus {
+    border: 1.5px solid #7c3aed;
+}
+
 .signup-btn {
     width: 100%;
     padding: 14px 0;
@@ -234,6 +288,13 @@ body {
 
 .signup-btn:hover {
     background: #6c4cf1;
+}
+
+.required {
+    font-size: 0.9rem;
+    color: #f87171;
+    margin-top: 4px;
+    margin-left: 10px;
 }
 
 @media (max-width: 900px) {

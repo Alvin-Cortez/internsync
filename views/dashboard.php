@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/.css">
+    <link rel="stylesheet" href="assets/css/dashboard.css">
     <title>InternSync</title>
 </head>
 <body>
@@ -17,14 +17,14 @@
             </svg>
             <span class="logo-text">InternSync</span>
             <div class="nav-links">
-                <a href="dashboard.html" class="active">Dashboard</a>
-                <a href="logs.html">Activity Logs</a>
+                <a href="?page=dashboard" class="active">Dashboard</a>
+                <a href="?page=logs">Activity Logs</a>
             </div>
         </div>
         <div class="nav-right">
-            <span class="user-name">John Doe</span>
+            <span class="user-name"><?=$_SESSION['name'];?></span>
             <img src="profile-icon.png" alt="profile-icon" class="user-avatar">
-            <a href="#" class="logout-link">Logout</a>
+            <a href="?page=logout" class="logout-link">Logout</a>
         </div>
     </nav>
 
@@ -81,7 +81,7 @@
                                 </div>
                                 <div>
                                     <div class="stat-label">Required Hours</div>
-                                    <div class="stat-value">120h</div>
+                                    <div class="stat-value"><?=$userData['hours']?>h</div>
                                 </div>
                             </div>
                             <div class="stat-card">
@@ -112,7 +112,7 @@
             <div class="activities-header">
                 <h3>Recent Activities</h3>
                 <span class="activities-subtitle">Your last 5 activities</span>
-                <a href="#" class="view-all">View all</a>
+                <a href="?page=logs" class="view-all">View all</a>
             </div>
             <table class="activities-table">
                 <thead>
@@ -125,41 +125,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>2023-06-15</td>
-                        <td>8:00 AM</td>
-                        <td>5:00 PM</td>
-                        <td>8</td>
-                        <td>Research on project requirements and team meeting</td>
-                    </tr>
-                    <tr>
-                        <td>2023-06-14</td>
-                        <td>8:00 AM</td>
-                        <td>5:00 PM</td>
-                        <td>7   </td>
-                        <td>Development work on frontend</td>
-                    </tr>
-                    <tr>
-                        <td>2023-06-13</td>
-                        <td>8:00 AM</td>
-                        <td>5:00 PM</td>
-                        <td>7</td>
-                        <td>Backend API integration</td>
-                    </tr>
-                    <tr>
-                        <td>2023-06-12</td>
-                        <td>8:00 AM</td>
-                        <td>5:00 PM</td>
-                        <td>8</td>
-                        <td>UI design and prototyping</td>
-                    </tr>
-                    <tr>
-                        <td>2023-06-11</td>
-                        <td>8:00 AM</td>
-                        <td>5:00 PM</td>
-                        <td>8</td>
-                        <td>Initial project setup</td>
-                    </tr>
+                    <?php foreach($tasks as $task): ?>
+                        <tr>
+                            <td><?= htmlspecialchars(date('M d Y', strtotime($task['date']))) ?></td>
+                            <td><?= htmlspecialchars(date('g:i a', strtotime($task['timeIn']))) ?></td>
+                            <td><?= htmlspecialchars(date('g:i a', strtotime($task['timeOut']))) ?></td>
+                            <?php $hours = floatval($task['totalHours']); ?>
+                            <td><?= ($hours == intval($hours)) ? intval($hours) : $hours; ?></td>
+                            <td><?= htmlspecialchars($task['activity']) ?></td>
+                        </tr>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </section>

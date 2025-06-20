@@ -48,12 +48,12 @@
         </div>
         <div class="form-right" >
             <!-- Login Form -->
-            <form class="signin-form" id="loginForm">
+            <form class="signin-form" id="loginForm" action="?page=signin" method="POST">
                 <h2>Log in to your account</h2>
                 <label for="email">Email</label>
-                <input type="email" id="email" placeholder="your@email.com" required>
+                <input type="email" id="email" name="email" placeholder="your@email.com">
                 <label for="password">Password</label>
-                <input type="password" id="password" placeholder="••••••••" required>
+                <input type="password" id="password" name="pass" placeholder="••••••••">
                 <div class="form-options">
                     <label class="remember-me">
                         <input type="checkbox"> Remember me
@@ -66,30 +66,30 @@
                 </div>
             </form>
             <!-- Register Form -->
-            <form class="signup-form" id="registerForm" style="display:none;">
+            <form class="signup-form" id="registerForm" style="display:none;" action="?page=signup" method="POST">
                 <h2>Create your account</h2>
                 <div class="register-names-row">
                     <div>
-                        <label for="firstName">First Name</label>
-                        <input type="text" id="firstName" placeholder="John" required>
+                        <label for="firstName">First Name<span class="required">*</span></label>
+                        <input type="text" id="firstName" name="firstName" placeholder="John">
                     </div>
                     <div>
-                        <label for="lastName">Last Name</label>
-                        <input type="text" id="lastName" placeholder="Doe" required>
+                        <label for="lastName">Last Name<span class="required">*</span></label>
+                        <input type="text" id="lastName" name="lastName" placeholder="Doe">
                     </div>
                 </div>
-                <label for="regEmail">Email</label>
-                <input type="email" id="regEmail" placeholder="your@email.com" required>
-                <label for="requiredHours">Required Hours</label>
-                <input type="number" id="requiredHours" placeholder="e.g. 120" required>
+                <label for="regEmail">Email<span class="required">*</span></label>
+                <input type="email" id="regEmail" name="regEmail" placeholder="your@email.com">
+                <label for="requiredHours">Required Hours<span class="required">*</span></label>
+                <input type="number" id="requiredHours" name="requiredHours" placeholder="e.g. 120">
                 <span style="font-size:0.95rem;color:#64748b;margin-bottom:8px;">Total hours required for your internship</span>
-                <label for="regPassword">Password</label>
-                <input type="password" id="regPassword" placeholder="••••••••" required>
-                <label for="confirmPassword">Confirm Password</label>
-                <input type="password" id="confirmPassword" placeholder="••••••••" required>
+                <label for="regPassword">Password<span class="required">*</span></label>
+                <input type="password" id="regPassword" name="regPassword" placeholder="••••••••">
+                <label for="confirmPassword">Confirm Password<span class="required">*</span></label>
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="••••••••">
                 <button type="submit" class="signup-btn" style="margin-top:16px;">Register</button>
                 <div class="register-link">
-                    Already have an account? <a href="dashboard.html" id="showLogin">Log in</a>
+                    Already have an account? <a href="dashboard.php" id="showLogin">Log in</a>
                 </div>
             </form>
         </div>
