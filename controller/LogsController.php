@@ -18,13 +18,15 @@ class LogsController extends Logs{
     }
 
     public function get(){
-        $tasks = $this->showLogs();
-        require 'views/logs.php';
-    }
+        $perPage = 10;
+        $page = isset($_GET['p']) ? max(1, intval($_GET['p'])) : 1;
+        $offset = ($page - 1) * $perPage;
 
-    public function getRecent(){
-        $tasks = $this->showLogs();
-        require 'views/dashboard.php';
+        $tasks = $this->showLogs($perPage, $offset);
+        $total = $this->countLogs();
+        $totalPages = ceil($total / $perPage);
+
+        require 'views/logs.php';
     }
 
     public function update(){

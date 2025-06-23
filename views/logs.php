@@ -71,32 +71,41 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach($tasks as $task): ?>
+                        <?php if(!empty($tasks)){
+                            foreach($tasks as $task){?>
+                                <tr>
+                                    <td><?= htmlspecialchars(date('M d Y', strtotime($task['date']))) ?></td>
+                                    <td><?= htmlspecialchars(date('g:i a', strtotime($task['timeIn']))) ?></td>
+                                    <td><?= htmlspecialchars(date('g:i a', strtotime($task['timeOut']))) ?></td>
+                                    <?php $hours = floatval($task['totalHours']); ?>
+                                    <td><?= ($hours == intval($hours)) ? intval($hours) : $hours; ?></td>
+                                    <td><?= htmlspecialchars($task['activity']) ?></td>
+                                    <td class="logs-actions">
+                                        <p class="logs-edit" onclick="editActvity()">Edit</p>
+                                        <p class="logs-delete">Delete</p>
+                                    </td>
+                                </tr><?php
+                            }
+                        } else {?>
                             <tr>
-                                <td><?= htmlspecialchars(date('M d Y', strtotime($task['date']))) ?></td>
-                                <td><?= htmlspecialchars(date('g:i a', strtotime($task['timeIn']))) ?></td>
-                                <td><?= htmlspecialchars(date('g:i a', strtotime($task['timeOut']))) ?></td>
-                                <?php $hours = floatval($task['totalHours']); ?>
-                                <td><?= ($hours == intval($hours)) ? intval($hours) : $hours; ?></td>
-                                <td><?= htmlspecialchars($task['activity']) ?></td>
-                                <td class="logs-actions">
-                                    <p class="logs-edit" onclick="editActvity()">Edit</p>
-                                    <p class="logs-delete">Delete</p>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
+                                <td colspan="6">No Activities</td>
+                            </tr><?php
+                        }
+                        ?>
                     </tbody>
                 </table>
                 <div class="logs-pagination">
-                    <span>Showing 1 to 10 of 24 results</span>
+                    <span>Showing <?= (($page - 1) * 10) + 1 ?> to <?= min($page * 10, $total) ?> of <?= $total ?> results</span>
                     <div class="logs-pagination-btns">
-                        <button>&lt;</button>
-                        <button>1</button>
-                        <button class="active">2</button>
-                        <button>3</button>
-                        <span>...</span>
-                        <button>8</button>
-                        <button>&gt;</button>
+                        <?php if ($page > 1): ?>
+                            <button><a href="?page=logs&p=<?= $page - 1 ?>">&lt;</a></button>
+                        <?php endif; ?>
+                        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                            <button><a href="?page=logs&p=<?= $i ?>" class="<?= $i == $page ? 'active' : '' ?>"><?= $i ?></a></button>
+                        <?php endfor; ?>
+                        <?php if ($page < $totalPages): ?>
+                            <button><a href="?page=logs&p=<?= $page + 1 ?>">&gt;</a></button>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>

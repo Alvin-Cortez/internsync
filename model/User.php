@@ -2,15 +2,24 @@
 
 class User extends Db {
 
-    protected function showUserInfo(){
+    protected function getUserTimeSummary(){
         $stmt = $this->connect()->prepare('SELECT * FROM users WHERE id = ?');
         $id = $_SESSION['user_id'];
-        if(!$stmt->execute([$id])){
-            header('location:index.php?page=dashboard');//stmtfailed
-            exit();
-        }
+        $stmt->execute([$id]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $stmt = $this->connect()->prepare('SELECT SUM(totalHours) as totalHours FROM logs WHERE userId = ?');
+        $stmt->execute([$id]);
+        $log = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $required = $user['hours'];
+        $rendered = floatval($log['totalHours']);
+        $remainng = max(0, $required - $rendered);
+
+        return[
+            'requiredHours' => $required,
+            'renderedHours' => $rendered,
+            'remainingHours' => $remainng
+        ];
     }
-
 }

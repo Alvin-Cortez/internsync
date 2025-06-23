@@ -81,7 +81,7 @@
                                 </div>
                                 <div>
                                     <div class="stat-label">Required Hours</div>
-                                    <div class="stat-value"><?=$userData['hours']?>h</div>
+                                    <div class="stat-value"><?=$timeSummary['requiredHours']?>h</div>
                                 </div>
                             </div>
                             <div class="stat-card">
@@ -90,7 +90,7 @@
                                 </div>
                                 <div>
                                     <div class="stat-label">Total Hours</div>
-                                    <div class="stat-value">45.5h</div>
+                                    <div class="stat-value"><?=$timeSummary['renderedHours']?>h</div>
                                 </div>
                             </div>
                             <div class="stat-card">
@@ -99,7 +99,7 @@
                                 </div>
                                 <div>
                                     <div class="stat-label">Remaining Hours</div>
-                                    <div class="stat-value">74.5h</div>
+                                    <div class="stat-value"><?=$timeSummary['remainingHours']?></div>
                                 </div>
                             </div>
                         </div>
@@ -125,16 +125,22 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach($tasks as $task): ?>
+                    <?php if (!empty($tasks)) {
+                        foreach($tasks as $task){ ?>
+                            <tr>
+                                <td><?= htmlspecialchars(date('M d Y', strtotime($task['date']))) ?></td>
+                                <td><?= htmlspecialchars(date('g:i a', strtotime($task['timeIn']))) ?></td>
+                                <td><?= htmlspecialchars(date('g:i a', strtotime($task['timeOut']))) ?></td>
+                                <?php $hours = floatval($task['totalHours']); ?>
+                                <td><?= ($hours == intval($hours)) ? intval($hours) : $hours; ?></td>
+                                <td><?= htmlspecialchars($task['activity']) ?></td>
+                            </tr>
+                        <?php }
+                    } else { ?>
                         <tr>
-                            <td><?= htmlspecialchars(date('M d Y', strtotime($task['date']))) ?></td>
-                            <td><?= htmlspecialchars(date('g:i a', strtotime($task['timeIn']))) ?></td>
-                            <td><?= htmlspecialchars(date('g:i a', strtotime($task['timeOut']))) ?></td>
-                            <?php $hours = floatval($task['totalHours']); ?>
-                            <td><?= ($hours == intval($hours)) ? intval($hours) : $hours; ?></td>
-                            <td><?= htmlspecialchars($task['activity']) ?></td>
+                            <td colspan="5">No recent activities</td>
                         </tr>
-                    <?php endforeach; ?>
+                    <?php } ?>
                 </tbody>
             </table>
         </section>

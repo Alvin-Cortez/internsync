@@ -36,11 +36,15 @@ class Logs extends Db{
         }
     }
 
-    protected function showLogs(){
-        $stmt = $this->connect()->prepare('SELECT * FROM logs WHERE userId = ?');
+    protected function showLogs($limit, $offset){
+        $stmt = $this->connect()->prepare('SELECT * FROM logs WHERE userId = ? LIMIT ? OFFSET ?');
         $id = $_SESSION['user_id'];
 
-        if(!$stmt->execute([$id])){
+        $stmt->bindValue(1, $id, PDO::PARAM_INT);
+        $stmt->bindValue(2, $limit, PDO::PARAM_INT);
+        $stmt->bindValue(3, $offset, PDO::PARAM_INT);
+
+        if(!$stmt->execute()){
             header('location:index.php?page=logs');//stmtfailed
             exit();
         }
@@ -48,8 +52,15 @@ class Logs extends Db{
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    protected function countLogs(){
+        $stmt = $this->connect()->prepare('SELECT COUNT(*) FROM logs WHERE userId = ?');
+        $id = $_SESSION['user_id'];
+        $stmt->execute([$id]);
+        return $stmt->fetchColumn();
+    }
+
     public function showRecentLogs(){
-        $stmt = $this->connect()->prepare('SELECT * FROM logs WHERE userId = ? LIMIT 5');
+        $stmt = $this->connect()->prepare('SELECT * FROM logs WHERE userId = ? ORDER BY date DESC LIMIT 5');
         $id = $_SESSION['user_id'];
 
         if(!$stmt->execute([$id])){
