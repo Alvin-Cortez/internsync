@@ -34,26 +34,9 @@
             <div class="logs-subtitle">View and manage all your tracked activities</div>
             <div class="logs-card">
                 <div class="logs-filters">
-                    <div>
-                        <label class="logs-label">Date Range</label>
-                        <select class="logs-select">
-                            <option>This Week</option>
-                            <option>Last Week</option>
-                            <option>This Month</option>
-                            <option>Last Month</option>
-                            <option>Custom</option>
-                        </select>
+                    <div class="searchbar">
+                        <input type="text" class="search-bar" placeholder="Search here..">
                     </div>
-                    <div>
-                        <label class="logs-label">Activity Type</label>
-                        <select class="logs-select">
-                            <option>All Activities</option>
-                            <option>Meeting</option>
-                            <option>Development</option>
-                            <option>Research</option>
-                        </select>
-                    </div>
-                    <button class="logs-filter-btn">Apply Filters</button>
                     <div class="logs-actions">
                         <button class="logs-add-btn" onclick="addActivity()">Add Activity</button>
                         <button class="logs-export-btn">Export Report</button>
@@ -118,16 +101,16 @@
             <h3 class="modal-title">Add New Activity</h3>
             <form class="modal-form" method="post" action="?page=add-logs">
                 <label class="modal-label" for="modal-date">Date</label>
-                <input type="text" id="modal-date" class="modal-input" placeholder="mm/dd/yy" autocomplete="off" name="date">
+                <input type="date" id="modal-date" class="modal-input" placeholder="mm/dd/yy" autocomplete="off" name="date">
 
                 <div class="modal-row">
                     <div>
                     <label class="modal-label" for="modal-time-in">Time In</label>
-                    <input type="text" id="modal-time-in" name="time-in" class="modal-input" placeholder="08:00 am">
+                    <input type="time" id="modal-time-in" name="time-in" class="modal-input" placeholder="08:00 am">
                     </div>
                     <div>
                     <label class="modal-label" for="modal-time-out">Time Out</label>
-                    <input type="text" id="modal-time-out" name="time-out" class="modal-input" placeholder="06:00 pm">
+                    <input type="time" id="modal-time-out" name="time-out" class="modal-input" placeholder="06:00 pm">
                     </div>
                 </div>
 

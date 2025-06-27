@@ -110,31 +110,15 @@ main {
   gap: 16px;
   margin-bottom: 24px;
 }
-.logs-label {
-  font-size: 1rem;
-  font-weight: 500;
-  color: #222;
-  display: block;
-  margin-bottom: 6px;
-}
-.logs-select {
-  padding: 10px 16px;
-  border: 1px solid #e5e7eb;
+.search-bar{
+  flex: 1;
+  display: flex;
+  align-items: center;
+  border: 1px solid #737780;
   border-radius: 6px;
-  font-size: 1rem;
-  background: #f9fafb;
-}
-.logs-filter-btn {
-  margin-top: 24px;
-  padding: 10px 22px;
-  background: #f3f4f6;
-  color: #222;
-  font-weight: 600;
-  border: none;
-  border-radius: 6px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background 0.2s;
+  padding: 8px 12px;
+  width: 20rem;
+  height: 2.5rem;
 }
 .logs-actions {
   margin-left: auto;
@@ -306,6 +290,12 @@ main {
   margin-bottom: 6px;
   margin-top: 18px;
   display: block;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator {
+  filter: invert(50%);
+  opacity: 0.5;
 }
 
 .modal-input {

@@ -2,36 +2,35 @@
 
 class Logs extends Db{
 
-    public function addLog($date, $timeIn, $timeout, $activity){
+    public function addLog($date, $timeIn, $timeout, $activity)
+    {
         $id = $_SESSION['user_id'];
 
-        $dateObj = DateTime::createFromFormat('m/d/y', $date);
-        $dateFormatted = $dateObj ? $dateObj->format('Y-m-d') : null;
+        $start = DateTime::createFromFormat('H:i', $timeIn);
+        $end = DateTime::createFromFormat('H:i', $timeout);
 
-        $start = DateTime::createFromFormat('h:i a', $timeIn);
-        $end = DateTime::createFromFormat('h:i a', $timeout);
-
-        if (!$dateFormatted || !$start || !$end) {
-            header('location:index.php?page=logs');//Invalid date and time format
+        if (!$start || !$end || !$date) {
+            header('location:index.php?page=logs'); // Invalid format
             exit();
         }
 
         $interval = $start->diff($end);
         $totalMinutes = $interval->h * 60 + $interval->i;
 
-        if($totalMinutes >= 300 && $end->format('H:i') != '12:00')
-        {
-            $totalMinutes -=60;
+        if ($totalMinutes >= 300 && $end->format('H:i') != '12:00') {
+            $totalMinutes -= 60;
         }
 
         $startFormatted = $start->format('H:i:s');
         $endFormatted = $end->format('H:i:s');
-        $totalHours = round($totalMinutes / 60, 2); 
+        $totalHours = round($totalMinutes / 60, 2);
 
-        $stmt = $this->connect()->prepare('INSERT INTO logs (userid, date, timeIn, timeOut, totalHours, activity) VALUES (?, ?, ?, ?, ?, ?)');
-        if(!$stmt->execute([$id, $dateFormatted, $startFormatted, $endFormatted, $totalHours, $activity]))
-        {
-            header('location:index.php?page=logs');//stmtfailed
+        $stmt = $this->connect()->prepare(
+            'INSERT INTO logs (userid, date, timeIn, timeOut, totalHours, activity) VALUES (?, ?, ?, ?, ?, ?)'
+        );
+
+        if (!$stmt->execute([$id, $date, $startFormatted, $endFormatted, $totalHours, $activity])) {
+            header('location:index.php?page=logs'); // DB error
             exit();
         }
     }

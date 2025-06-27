@@ -13,6 +13,8 @@ const closeAddModal = () =>{
 
 const editActvity = () => {
     editActiivityModal.style.display = 'flex';
+
+    
 }
 
 const closeEditModal = () => {
