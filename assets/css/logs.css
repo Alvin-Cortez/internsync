@@ -110,6 +110,13 @@ main {
   gap: 16px;
   margin-bottom: 24px;
 }
+.logs-label {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #222;
+  display: block;
+  margin-bottom: 6px;
+}
 .search-bar{
   flex: 1;
   display: flex;
@@ -238,6 +245,11 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
+  display: none;
+}
+
+.modal-overlay.show {
+  display: flex;
 }
 
 .modal-content {
@@ -290,12 +302,6 @@ main {
   margin-bottom: 6px;
   margin-top: 18px;
   display: block;
-}
-
-input[type="date"]::-webkit-calendar-picker-indicator,
-input[type="time"]::-webkit-calendar-picker-indicator {
-  filter: invert(50%);
-  opacity: 0.5;
 }
 
 .modal-input {

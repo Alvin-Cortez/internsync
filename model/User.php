@@ -15,11 +15,13 @@ class User extends Db {
         $required = $user['hours'];
         $rendered = floatval($log['totalHours']);
         $remainng = max(0, $required - $rendered);
+        $percent = round($required > 0 ? ($rendered / $required) * 100 : 0);
 
         return[
             'requiredHours' => $required,
             'renderedHours' => $rendered,
-            'remainingHours' => $remainng
+            'remainingHours' => $remainng,
+            'renderedPercent' => $percent
         ];
     }
 }

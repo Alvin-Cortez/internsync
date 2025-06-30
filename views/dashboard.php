@@ -71,7 +71,7 @@
                                 />
                             </svg>
                             <div class="progress-text">
-                                <span>38%</span>
+                                <span><?=$timeSummary['renderedPercent']?>%</span>
                             </div>
                         </div>
                         <div class="summary-stats">

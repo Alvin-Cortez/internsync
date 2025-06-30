@@ -26,7 +26,7 @@ switch ($page) {
         $user->dashboard();
         break;
     case 'logs':
-        $logs->get();
+        require 'views/logs.php';
         break;
     case 'signin':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -36,6 +36,7 @@ switch ($page) {
         } else {
             $auth->index();
         }
+        break;
     case 'signup':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $auth->signUp($_POST);
@@ -44,16 +45,20 @@ switch ($page) {
         } else {
             $auth->index();
         }
+        break;
     case 'logout':
         $auth->logout();
         break;
     case 'add-logs':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $logs->create($_POST);
-            header('location:index.php?page=logs');
             break;
-        } else {
-            header('location:index.php?page=logs');
+        }
+        break;
+    case 'update-logs':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $logs->update($_POST);
+            break;
         }
         break;
     default:

@@ -17,20 +17,25 @@ class LogsController extends Logs{
         return $this->addLog($date, $timeIn, $timeOut, $activity);
     }
 
-    public function get(){
-        $perPage = 10;
-        $page = isset($_GET['p']) ? max(1, intval($_GET['p'])) : 1;
-        $offset = ($page - 1) * $perPage;
+    public function update($data){
+        $id = $data['log_id'];
+        $date = $data['edit-date'];
+        $timeIn = $data['edit-timeIn'];
+        $timeOut = $data['edit-timeOut'];
+        $activity = $data['edit-desc'];
 
-        $tasks = $this->showLogs($perPage, $offset);
-        $total = $this->countLogs();
-        $totalPages = ceil($total / $perPage);
+        if(!$this->isEmptyInput($date, $timeIn, $timeOut, $activity)) {
+            echo json_encode(['status' => 'error', 'msg' => 'Empty fields']);
+            exit();
+        }
 
-        require 'views/logs.php';
-    }
-
-    public function update(){
-        
+        if($this->editLog($id, $date, $timeIn, $timeOut, $activity)) {
+            echo json_encode(['status' => 'success']);
+        } else {
+            echo json_encode(['status' => 'error', 'msg' => 'Update failed']);
+        }
+        echo json_encode(['status' => 'success']);
+        exit();
     }
 
     public function delete(){
