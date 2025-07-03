@@ -390,6 +390,49 @@ main {
   background: #3730a3;
 }
 
+#toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.toast {
+  min-width: 250px;
+  max-width: 300px;
+  padding: 15px 20px;
+  border-radius: 8px;
+  color: #ffffff;
+  font-family: sans-serif;
+  animation: fadeInOut 4s forwards;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  cursor: pointer;
+  word-wrap: break-word;
+}
+
+.toast-success { background-color: #4caf50; }
+.toast-error { background-color: #f44336; }
+.toast-info { background-color: #2196f3; }
+
+.modal-btn {
+    padding: 8px 18px;
+    border: none;
+    border-radius: 5px;
+    background: #f3f4f6;
+    color: #333;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+
+.modal-btn.danger {
+    background: #e74c3c;
+    color: #fff;
+}
+
 @media (max-width: 600px) {
   .modal-content {
     padding: 16px 6vw 16px 6vw;

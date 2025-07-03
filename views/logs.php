@@ -29,6 +29,8 @@
         </div>
     </nav>
 
+    <div id="toast-container"></div>
+
     <main>
         <div class="logs-container">
             <h2 class="logs-title">Activity Logs</h2>
@@ -125,6 +127,19 @@
                     <button type="submit" class="modal-save">Save Activity</button>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <!-- Delete Modal -->
+    <div id="modal-delete" class="modal-overlay">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h2>Delete User</h2>
+            <p>Are you sure you want to delete this user?</p>
+            <div class="modal-actions">
+            <button id="confirm-delete" class="modal-btn danger">Delete</button>
+            <button type="button" class="modal-btn">Cancel</button>
+            </div>
         </div>
     </div>
     <script src="assets/js/logs.js"></script>

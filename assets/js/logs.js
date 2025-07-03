@@ -20,9 +20,9 @@ const closeEditModal = () => {
 } */
 
     $(document).ready(function () {
-        loadlLogs();
+        loadLogs();
 
-        function loadlLogs(page = 1){
+        function loadLogs(page = 1){
             $.ajax({
                 type: "GET",
                 url: "ajax/logs.php",
@@ -60,7 +60,7 @@ const closeEditModal = () => {
 
         $(document).on('click', '.page-btn', function () {
             const page = $(this).data('page');
-            loadlLogs(page);
+            loadLogs(page);
         });
 
         function renderPagination(currentPage, totalPages) {
@@ -102,9 +102,10 @@ const closeEditModal = () => {
                 url: "http://localhost/internsync/index.php?page=add-logs",
                 data: $(this).serialize(),
                 success: function (response) {
-                    loadlLogs();
+                    loadLogs();
                     $('#addActivityModal').removeClass('show');
                     $('#modal-add')[0].reset();
+                    showToast({ type: response.status, message: response.msg });
                 }
             });
         });
@@ -118,11 +119,12 @@ const closeEditModal = () => {
                 dataType: 'json',
                 success: function (response) {
                     if (response.status === 'success') {
-                        loadlLogs();
+                        loadLogs();
                         $('#editActivityModal').removeClass('show');
                         $('#modal-edit')[0].reset();
+                        showToast({ type: response.status, message: response.msg });
                     } else {
-                        alert(response.message);
+                        alert(response.msg);
                     }
                 },
                 error: function () {
@@ -130,4 +132,41 @@ const closeEditModal = () => {
                 }
             });
         });
+
+        $(document).on('click', '.logs-delete', function () {
+            const id = $(this).data('id');
+            $('#confirm-delete').data('id', id);
+            $('#modal-delete').addClass('show');
+        });
+
+        $('#confirm-delete').on('click', function (e) {
+            e.preventDefault();
+            const id = $(this).data('id');
+            $.ajax({
+                type: "POST",
+                url: "http://localhost/internsync/index.php?page=delete-logs",
+                data: { id: id },
+                dataType: "json",
+                success: function (response) {
+                    loadLogs();
+                    $('#modal-delete').removeClass('show');
+                    showToast({ type: response.status, message: response.msg });
+                }
+            });
+        });
+
+        function showToast({ type = "info", message = "" }) {
+            const toast = $(`
+                <div class="toast toast-${type}">
+                ${message}
+                </div>
+            `);
+
+            $("#toast-container").append(toast);
+
+            toast.click(() => toast.remove());
+            setTimeout(() => {
+                toast.fadeOut(400, () => toast.remove());
+            }, 4000);
+        }
     });

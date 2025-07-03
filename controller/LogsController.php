@@ -10,7 +10,7 @@ class LogsController extends Logs{
 
         if(!$this->isEmptyInput($date, $timeIn, $timeOut, $activity))
         {
-            header('location:index.php?page=logs');
+            echo json_encode(['status' => 'error', 'msg' => 'All fields are required!']);
             exit();
         }
 
@@ -25,21 +25,22 @@ class LogsController extends Logs{
         $activity = $data['edit-desc'];
 
         if(!$this->isEmptyInput($date, $timeIn, $timeOut, $activity)) {
-            echo json_encode(['status' => 'error', 'msg' => 'Empty fields']);
+            echo json_encode(['status' => 'error', 'msg' => 'All fields are required!']);
             exit();
         }
 
         if($this->editLog($id, $date, $timeIn, $timeOut, $activity)) {
-            echo json_encode(['status' => 'success']);
+            echo json_encode(['status' => 'success', 'msg' => 'Update Logs Successfully']);
+            exit();
         } else {
             echo json_encode(['status' => 'error', 'msg' => 'Update failed']);
+            exit();
         }
-        echo json_encode(['status' => 'success']);
-        exit();
     }
 
-    public function delete(){
-
+    public function delete($data){
+        $id = $data['id'];
+        return $this->removeLog($id);
     }
 
     private function isEmptyInput($date, $timeIn, $timeOut, $activity){

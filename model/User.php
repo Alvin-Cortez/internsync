@@ -15,7 +15,11 @@ class User extends Db {
         $required = $user['hours'];
         $rendered = floatval($log['totalHours']);
         $remainng = max(0, $required - $rendered);
-        $percent = round($required > 0 ? ($rendered / $required) * 100 : 0);
+        if(($rendered / $required) * 100 > 100){
+            $percent = 100;
+        } else {
+            $percent = round(($rendered / $required) * 100);
+        }
 
         return[
             'requiredHours' => $required,

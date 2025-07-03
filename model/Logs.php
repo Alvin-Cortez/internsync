@@ -12,7 +12,7 @@ class Logs extends Db{
         $start = DateTime::createFromFormat('h:i a', $timeIn);
         $end = DateTime::createFromFormat('h:i a', $timeout);
         if (!$dateFormatted || !$start || !$end) {
-            header('location:index.php?page=logs');
+            echo json_encode(['status' => 'error', 'msg' => 'Invalid Date & Time Format, Please follow the placeholder']);
             exit();
         }
 
@@ -31,9 +31,12 @@ class Logs extends Db{
         $stmt = $this->connect()->prepare('INSERT INTO logs (userid, date, timeIn, timeOut, totalHours, activity) VALUES (?, ?, ?, ?, ?, ?)');
         if(!$stmt->execute([$id, $dateFormatted, $startFormatted, $endFormatted, $totalHours, $activity]))
         {
-            header('location:index.php?page=logs');//stmtfailed
+            echo json_encode(['status' => 'error', 'msg' => 'Unable to execute']);
             exit();
         }
+        
+        echo json_encode(['status' => 'success', 'msg' => 'Log added successfully']);
+        exit();
     }
 
     public function showLogs($limit, $offset){
@@ -45,7 +48,7 @@ class Logs extends Db{
         $stmt->bindValue(3, $offset, PDO::PARAM_INT);
 
         if(!$stmt->execute()){
-            header('location:index.php?page=logs');//stmtfailed
+            echo json_encode(['status' => 'error', 'msg' => 'Unable to execute']);
             exit();
         }
 
@@ -64,7 +67,7 @@ class Logs extends Db{
         $id = $_SESSION['user_id'];
 
         if(!$stmt->execute([$id])){
-            header('location:index.php?page=logs');//stmtfailed
+            echo json_encode(['status' => 'error', 'msg' => 'Unable to execute']);
             exit();
         }
 
@@ -79,7 +82,7 @@ class Logs extends Db{
         if (!$dateObj || !$start || !$end) {
             echo json_encode([
                 'status' => 'error',
-                'message' => 'Invalid date or time format.'
+                'msg' => 'Invalid date or time format.'
             ]);
             exit();
         }
@@ -98,15 +101,22 @@ class Logs extends Db{
 
         $stmt = $this->connect()->prepare('UPDATE logs SET date = ?, timeIn = ?, timeOut = ?, totalHours = ?, activity = ? WHERE id = ?');
         if (!$stmt->execute([$dateFormatted, $startFormatted, $endFormatted, $totalHours, $activity, $logId])) {
-            echo json_encode(['status' => 'error', 'message' => 'Failed to update log in the database.']);
+            echo json_encode(['status' => 'error', 'msg' => 'Failed to update log in the database.']);
             exit();
         }
 
-        echo json_encode(['status' => 'success', 'message' => 'Log updated successfully.']);
+        echo json_encode(['status' => 'success', 'msg' => 'Log updated successfully.']);
         exit();
     }
 
-    protected function removeLog(){
-
+    protected function removeLog($id) {
+        $stmt = $this->connect()->prepare('DELETE FROM logs WHERE id = ?');
+        if ($stmt->execute([$id])) {
+            echo json_encode(['status' => 'success', 'msg' => 'Log deleted successfully']);
+            exit();
+        } else {
+            echo json_encode(['status' => 'error', 'msg' => 'Unable to delete log']);
+            exit();
+        }
     }
 }

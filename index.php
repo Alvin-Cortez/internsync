@@ -61,6 +61,12 @@ switch ($page) {
             break;
         }
         break;
+    case 'delete-logs':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $logs->delete($_POST);
+            break;
+        }
+        break;
     default:
         echo "404 Not Found";
 }

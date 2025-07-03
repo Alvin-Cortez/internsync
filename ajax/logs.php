@@ -36,7 +36,7 @@
                     <td><?= htmlspecialchars($task['activity']) ?></td>
                     <td class="logs-actions">
                         <p class="logs-edit">Edit</p>
-                        <p class="logs-delete">Delete</p>
+                        <p class="logs-delete" data-id="<?= $task['id'] ?>">Delete</p>
                     </td>
                 </tr>
                 <?php
