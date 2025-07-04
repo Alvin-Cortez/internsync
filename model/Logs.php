@@ -33,10 +33,10 @@ class Logs extends Db{
         {
             echo json_encode(['status' => 'error', 'msg' => 'Unable to execute']);
             exit();
+        } else {
+            echo json_encode(['status' => 'success', 'msg' => 'Log added successfully']);
+            exit();
         }
-        
-        echo json_encode(['status' => 'success', 'msg' => 'Log added successfully']);
-        exit();
     }
 
     public function showLogs($limit, $offset){
@@ -103,10 +103,10 @@ class Logs extends Db{
         if (!$stmt->execute([$dateFormatted, $startFormatted, $endFormatted, $totalHours, $activity, $logId])) {
             echo json_encode(['status' => 'error', 'msg' => 'Failed to update log in the database.']);
             exit();
+        } else {
+            echo json_encode(['status' => 'success', 'msg' => 'Log updated successfully.']);
+            exit();
         }
-
-        echo json_encode(['status' => 'success', 'msg' => 'Log updated successfully.']);
-        exit();
     }
 
     protected function removeLog($id) {
@@ -118,5 +118,54 @@ class Logs extends Db{
             echo json_encode(['status' => 'error', 'msg' => 'Unable to delete log']);
             exit();
         }
+    }
+
+    public function countSearchResult($data) {
+        $sql = 'SELECT COUNT(*) FROM logs WHERE userId = ? AND (
+            date LIKE ? 
+            OR DATE_FORMAT(date, "%b") LIKE ? 
+            OR DATE_FORMAT(date, "%M") LIKE ? 
+            OR DATE_FORMAT(date, "%m") LIKE ? 
+            OR totalHours LIKE ? 
+            OR activity LIKE ?
+        )';
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([
+            $_SESSION['user_id'],
+            "%$data%",
+            "%$data%",
+            "%$data%",
+            "%$data%",
+            "%$data%",
+            "%$data%"
+        ]);
+        return $stmt->fetchColumn();
+    }
+
+    public function showSearchResult($data, $perPage ,$offset){
+        $limit = intval($perPage);
+        $offset = intval($offset);
+        $sql = 'SELECT * FROM logs WHERE userId = ? AND (
+            date LIKE ? 
+            OR DATE_FORMAT(date, "%b") LIKE ? 
+            OR DATE_FORMAT(date, "%M") LIKE ? 
+            OR DATE_FORMAT(date, "%m") LIKE ? 
+            OR totalHours LIKE ? 
+            OR activity LIKE ?
+        ) LIMIT ' . $limit . ' OFFSET ' . $offset;
+
+        $stmt = $this->connect()->prepare($sql);
+
+        $stmt->execute([
+            $_SESSION['user_id'],
+            "%$data%",
+            "%$data%",
+            "%$data%",
+            "%$data%",
+            "%$data%",
+            "%$data%"
+        ]);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

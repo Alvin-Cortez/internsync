@@ -23,7 +23,6 @@
         </div>
         <div class="nav-right">
             <span class="user-name"><?=$_SESSION['name'];?></span>
-            <img src="profile-icon.png" alt="profile-icon" class="user-avatar">
             <a href="?page=logout" class="logout-link">Logout</a>
         </div>
     </nav>

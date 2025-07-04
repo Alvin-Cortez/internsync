@@ -20,8 +20,7 @@ const closeEditModal = () => {
 } */
 
     $(document).ready(function () {
-        loadLogs();
-
+        let currentQuery = ""
         function loadLogs(page = 1){
             $.ajax({
                 type: "GET",
@@ -30,7 +29,7 @@ const closeEditModal = () => {
                 dataType: 'json',
                 success: function (response) {
                     $('tbody').html(response.tbody);
-                    $('.logs-pagination-btns').html(renderPagination(page, response.totalPages));
+                    $('.logs-pagination-btns').html(renderPagination(page, response.totalPages, false));
                     $('.logs-summary-text').text(`Showing ${response.start} to ${response.end} of ${response.total} results`);
                 },
                 error: function () {
@@ -38,6 +37,66 @@ const closeEditModal = () => {
                 }
             });
         }
+
+        function searchLogs(query, page = 1){
+            $.ajax({
+                type: "GET",
+                url: "ajax/search.php",
+                data: {action: 'search', search: query, p: page},
+                dataType: 'json',
+                success: function (response) {
+                    $('tbody').html(response.tbody);
+                    $('.logs-pagination-btns').html(renderPagination(page, response.totalPages, true));
+                    $('.logs-summary-text').text(`Showing ${response.start} to ${response.end} of ${response.total} results`);
+                }
+            });
+        }
+
+        function renderPagination(currentPage, totalPages, isSearch){
+            let html = '';
+            if (currentPage > 1) {
+                html += `<button class="page-btn" data-page="${currentPage - 1}" data-search="${isSearch ? 1 : 0}"><</button>`;
+            }
+            let start = Math.max(1, currentPage - 1);
+            let end = Math.min(totalPages, currentPage + 1);
+
+            if (currentPage === 1) {
+                end = Math.min(totalPages, 3);
+            }
+
+            if (currentPage === totalPages) {
+                start = Math.max(1, totalPages - 2);
+            }
+
+            for (let i = start; i <= end; i++) {
+                html += `<button class="page-btn ${i === currentPage ? 'active' : ''}" data-page="${i}" data-search="${isSearch ? 1 : 0}">${i}</button>`;
+            }
+
+            if (currentPage < totalPages) {
+                html += `<button class="page-btn" data-page="${currentPage + 1}" data-search="${isSearch ? 1 : 0}">></button>`;
+            }
+            return html;
+        }
+
+        $(document).on('click', '.page-btn', function () {
+            const page = $(this).data('page');
+            const isSearch = $(this).data('search');
+            if (isSearch && currentQuery.length > 0) {
+                searchLogs(currentQuery, page);
+            } else {
+                loadLogs(page);
+            }
+        });
+
+        $(document).on('keyup', '#search', function () {
+            const query = $(this).val().trim();
+            currentQuery = query;
+            if (query.length > 0) {
+                searchLogs(query);
+            } else {
+                loadLogs();
+            }
+        });
 
         $('.logs-add-btn').on('click', function () {
             $('#addActivityModal').addClass('show');
@@ -53,47 +112,11 @@ const closeEditModal = () => {
             $('#edit-log-id').val(row.data('id'));
         });
 
-        $('#closeAddModal, #closeEditModal, .modal-cancel, .edit-cancel').on('click', function () {
+        $('#closeAddModal, #closeEditModal, .modal-close, .modal-cancel, .edit-cancel, .modal-btn').on('click', function () {
             $('#addActivityModal').removeClass('show');
             $('#editActivityModal').removeClass('show');
+            $('#modal-delete').removeClass('show');
         })
-
-        $(document).on('click', '.page-btn', function () {
-            const page = $(this).data('page');
-            loadLogs(page);
-        });
-
-        function renderPagination(currentPage, totalPages) {
-            let html = '';
-            if (currentPage > 1) {
-                html += `<button class="page-btn" data-page="${currentPage - 1}"><</button>`;
-            }
-            let start = Math.max(1, currentPage - 1);
-            let end = Math.min(totalPages, currentPage + 1);
-
-            if (currentPage === 1) {
-                end = Math.min(totalPages, 3);
-            }
-
-            if (currentPage === totalPages) {
-                start = Math.max(1, totalPages - 2);
-            }
-
-            for (let i = start; i <= end; i++) {
-                html += `<button class="page-btn ${i === currentPage ? 'active' : ''}" data-page="${i}">${i}</button>`;
-            }
-
-            if (currentPage < totalPages) {
-                html += `<button class="page-btn" data-page="${currentPage + 1}">></button>`;
-            }
-
-            /*// Last
-            if (currentPage < totalPages) {
-                html += `<button class="page-btn" data-page="${totalPages}">>></button>`;
-            } */
-
-            return html;
-        }
 
         $('#modal-add').on('submit', function (e) {
             e.preventDefault();
@@ -101,6 +124,7 @@ const closeEditModal = () => {
                 type: "POST",
                 url: "http://localhost/internsync/index.php?page=add-logs",
                 data: $(this).serialize(),
+                dataType: 'json',
                 success: function (response) {
                     loadLogs();
                     $('#addActivityModal').removeClass('show');
@@ -169,4 +193,5 @@ const closeEditModal = () => {
                 toast.fadeOut(400, () => toast.remove());
             }, 4000);
         }
+        loadLogs();
     });

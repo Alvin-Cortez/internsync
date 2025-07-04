@@ -57,6 +57,7 @@ a {
 .user-name {
   font-weight: 500;
   color: #222;
+  cursor: pointer;
 }
 .user-avatar {
   background: #eef2ff;
@@ -263,6 +264,10 @@ main {
   display: flex;
   flex-direction: column;
   gap: 0;
+}
+
+.modal-content .modal-delete-head {
+  margin-bottom: 16px;
 }
 
 .modal-close {

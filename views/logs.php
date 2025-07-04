@@ -24,7 +24,6 @@
         </div>
         <div class="nav-right">
             <span class="user-name"><?=$_SESSION['name'];?></span>
-            <img src="profile-icon.png" alt="profile-icon" class="user-avatar">
             <a href="?page=logout" class="logout-link">Logout</a>
         </div>
     </nav>
@@ -38,7 +37,7 @@
             <div class="logs-card">
                 <div class="logs-filters">
                     <div class="searchbar">
-                        <input type="text" class="search-bar" placeholder="Search here..">
+                        <input type="text" class="search-bar" placeholder="Search here.." id="search">
                         <span></span>
                     </div>
                     <div class="logs-actions">
@@ -134,7 +133,7 @@
     <div id="modal-delete" class="modal-overlay">
         <div class="modal-content">
             <span class="modal-close">&times;</span>
-            <h2>Delete User</h2>
+            <h2 class="modal-delete-head">Delete User</h2>
             <p>Are you sure you want to delete this user?</p>
             <div class="modal-actions">
             <button id="confirm-delete" class="modal-btn danger">Delete</button>
