@@ -275,6 +275,9 @@ h2 {
   font-size: 1.1rem;
   font-weight: 700;
 }
+#progressBar {
+    transition: stroke-dashoffset 0.5s ease;
+}
 .summary-stats {
   display: flex;
   gap: 24px;

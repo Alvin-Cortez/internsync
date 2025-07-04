@@ -47,3 +47,21 @@ clockOutBtn.onclick = function() {
     timer = 0;
     timerEl.textContent = '00:00:00';
 };
+
+document.addEventListener('DOMContentLoaded', function() {
+    var progressCircle = document.getElementById('progressCircle');
+    if (progressCircle) {
+        var renderedPercent = parseFloat(progressCircle.getAttribute('data-rendered')) || 0;
+        var radius = 30;
+        var circumference = 2 * Math.PI * radius;
+        var offset = circumference - (renderedPercent / 100) * circumference;
+        var progressBar = document.getElementById('progressBar');
+        var progressText = document.getElementById('progressText');
+        if(progressBar) {
+            progressBar.setAttribute('stroke-dashoffset', offset);
+        }
+        if(progressText) {
+            progressText.textContent = renderedPercent + '%';
+        }
+    }
+});

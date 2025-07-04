@@ -193,5 +193,16 @@ const closeEditModal = () => {
                 toast.fadeOut(400, () => toast.remove());
             }, 4000);
         }
+
+        // Progess Bar
+        var renderedPercent = parseFloat($('.progress-circle').data('rendered'));
+
+        var radius = 30;
+        var circumference = 2 * Math.PI * radius;
+        var offset = circumference - (renderedPercent / 100) * circumference;
+
+        $('#progressBar').css('stroke-dashoffset', offset);
+        $('#progressText').text(renderedPercent + '%');
+        
         loadLogs();
     });

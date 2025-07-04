@@ -60,19 +60,24 @@
                         <div class="hours-summary-subtitle">Track your progress towards completion</div>
                     </div>
                     <div class="summary-content">
-                        <div class="progress-circle">
-                            <svg width="70" height="70">
-                                <circle cx="35" cy="35" r="30" stroke="#e5e7eb" stroke-width="7" fill="none"/>
-                                <circle cx="35" cy="35" r="30" stroke="#4f46e5" stroke-width="7" fill="none"
-                                    stroke-linecap="round"
-                                    stroke-dasharray="188.4"
-                                    stroke-dashoffset="116.8"
-                                />
-                            </svg>
-                            <div class="progress-text">
-                                <span><?=$timeSummary['renderedPercent']?>%</span>
-                            </div>
+                        <div class="progress-circle" id="progressCircle" data-rendered="<?=$timeSummary['renderedPercent']?>">
+                        <svg width="70" height="70">
+                            <circle cx="35" cy="35" r="30" stroke="#e5e7eb" stroke-width="7" fill="none"/>
+                            <circle
+                                id="progressBar"
+                                cx="35" cy="35" r="30"
+                                stroke="#4f46e5"
+                                stroke-width="7"
+                                fill="none"
+                                stroke-linecap="round"
+                                stroke-dasharray="188.4"
+                                stroke-dashoffset="188.4"
+                            />
+                        </svg>
+                        <div class="progress-text">
+                            <span id="progressText"><?=$timeSummary['renderedPercent']?>%</span>
                         </div>
+                    </div>
                         <div class="summary-stats">
                             <div class="stat-card">
                                 <div class="stat-icon stat-icon-calendar">
