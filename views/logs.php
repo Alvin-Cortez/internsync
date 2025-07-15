@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/logs.css">
+    <link rel="stylesheet" href="assets/css/profile-modal.css">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>InternSync</title>
 </head>
 <body>
@@ -23,7 +25,7 @@
             </div>
         </div>
         <div class="nav-right">
-            <span class="user-name"><?=$_SESSION['name'];?></span>
+            <span class="user-name" id="openProfileModal"><?=$_SESSION['name'];?></span>
             <a href="?page=logout" class="logout-link">Logout</a>
         </div>
     </nav>
@@ -66,81 +68,7 @@
             </div>
         </div>
     </main>
-    <!--Add Activity Modal-->
-    <div class="modal-overlay" id="addActivityModal">
-        <div class="modal-content">
-            <button class="modal-close" aria-label="Close" id="closeAddModal">&times;</button>
-            <h3 class="modal-title">Add New Activity</h3>
-            <form class="modal-form" id="modal-add" method="post">
-                <label class="modal-label" for="modal-date">Date</label>
-                <input type="text" id="modal-date" class="modal-input" placeholder="mm/dd/yy" autocomplete="off" name="date">
-
-                <div class="modal-row">
-                    <div>
-                    <label class="modal-label" for="modal-time-in">Time In</label>
-                    <input type="text" id="modal-time-in" name="time-in" class="modal-input" placeholder="08:00 am">
-                    </div>
-                    <div>
-                    <label class="modal-label" for="modal-time-out">Time Out</label>
-                    <input type="text" id="modal-time-out" name="time-out" class="modal-input" placeholder="06:00 pm">
-                    </div>
-                </div>
-
-                <label class="modal-label" for="modal-desc">Activity Description</label>
-                <textarea id="modal-desc" name="activity" class="modal-textarea" placeholder="Describe your activity"></textarea>
-
-                <div class="modal-actions">
-                    <button type="button" class="modal-cancel">Cancel</button>
-                    <button type="submit" class="modal-save">Save Activity</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!--Edit Activity Modal-->
-    <div class="modal-overlay" id="editActivityModal">
-        <div class="modal-content">
-            <button class="modal-close" aria-label="Close" id="closeEditModal">&times;</button>
-            <h3 class="modal-title">Edit New Activity</h3>
-            <form class="modal-form" id="modal-edit"  method="post">
-                <input type="hidden" id="edit-log-id" name="log_id">
-                <label class="modal-label" for="modal-date">Date</label>
-                <input type="text" id="modal-date" class="modal-input" placeholder="dd/mm/yyyy" name="edit-date" autocomplete="off">
-
-                <div class="modal-row">
-                    <div>
-                    <label class="modal-label" for="modal-time-in">Time In</label>
-                    <input type="text" id="modal-time-in" name="edit-timeIn" class="modal-input" placeholder="--:-- --">
-                    </div>
-                    <div>
-                    <label class="modal-label" for="modal-time-out">Time Out</label>
-                    <input type="text" id="modal-time-out" name="edit-timeOut" class="modal-input" placeholder="--:-- --">
-                    </div>
-                </div>
-
-                <label class="modal-label" for="modal-desc">Activity Description</label>
-                <textarea id="modal-desc" class="modal-textarea" name="edit-desc" placeholder="Describe your activity"></textarea>
-
-                <div class="modal-actions">
-                    <button type="button" class="modal-cancel" id="edit-cancel">Cancel</button>
-                    <button type="submit" class="modal-save">Save Activity</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Delete Modal -->
-    <div id="modal-delete" class="modal-overlay">
-        <div class="modal-content">
-            <span class="modal-close">&times;</span>
-            <h2 class="modal-delete-head">Delete User</h2>
-            <p>Are you sure you want to delete this user?</p>
-            <div class="modal-actions">
-            <button id="confirm-delete" class="modal-btn danger">Delete</button>
-            <button type="button" class="modal-btn">Cancel</button>
-            </div>
-        </div>
-    </div>
+    <?php include 'views/modal.php'; ?>
     <script src="assets/js/logs.js"></script>
 </body>
 </html>

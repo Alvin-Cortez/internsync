@@ -1,24 +1,3 @@
-/* // Add Activity Modal
-const addActivityModal = document.getElementById('addActivityModal');
-const editActiivityModal = document.getElementById('editActivityModal');
-
-
-const addActivity = () =>{
-    addActivityModal.style.display = 'flex';
-}
-
-const closeAddModal = () =>{
-    addActivityModal.style.display = 'none';
-}
-
-const editActvity = () => {
-    editActiivityModal.style.display = 'flex';
-}
-
-const closeEditModal = () => {
-    editActiivityModal.style.display = 'none';
-} */
-
     $(document).ready(function () {
         let currentQuery = ""
         function loadLogs(page = 1){
@@ -98,13 +77,15 @@ const closeEditModal = () => {
             }
         });
 
+
         $('.logs-add-btn').on('click', function () {
-            $('#addActivityModal').addClass('show');
+            $('#addActivityModal').addClass('show').css('display', 'flex');
         });
+
 
         $(document).on('click', '.logs-edit', function () {
             const row = $(this).closest('tr');
-            $('#editActivityModal').addClass('show');
+            $('#editActivityModal').addClass('show').css('display', 'flex');
             $('#editActivityModal #modal-date').val(row.data('date'));
             $('#editActivityModal #modal-time-in').val(row.data('timein'));
             $('#editActivityModal #modal-time-out').val(row.data('timeout'));
@@ -112,11 +93,12 @@ const closeEditModal = () => {
             $('#edit-log-id').val(row.data('id'));
         });
 
+
         $('#closeAddModal, #closeEditModal, .modal-close, .modal-cancel, .edit-cancel, .modal-btn').on('click', function () {
-            $('#addActivityModal').removeClass('show');
-            $('#editActivityModal').removeClass('show');
-            $('#modal-delete').removeClass('show');
-        })
+            $('#addActivityModal').removeClass('show').css('display', 'none');
+            $('#editActivityModal').removeClass('show').css('display', 'none');
+            $('#modal-delete').removeClass('show').css('display', 'none');
+        });
 
         $('#modal-add').on('submit', function (e) {
             e.preventDefault();
@@ -157,10 +139,11 @@ const closeEditModal = () => {
             });
         });
 
+
         $(document).on('click', '.logs-delete', function () {
             const id = $(this).data('id');
             $('#confirm-delete').data('id', id);
-            $('#modal-delete').addClass('show');
+            $('#modal-delete').addClass('show').css('display', 'flex');
         });
 
         $('#confirm-delete').on('click', function (e) {
@@ -203,6 +186,46 @@ const closeEditModal = () => {
 
         $('#progressBar').css('stroke-dashoffset', offset);
         $('#progressText').text(renderedPercent + '%');
+
+        var $openBtn = $('#openProfileModal');
+            var $overlay = $('#profileModalOverlay');
+            var $closeBtn = $('#closeProfileModal');
+            var $navBtns = $('.profile-nav-btn');
+            var $sections = {
+                profile: $('#profileSection'),
+                password: $('#passwordSection'),
+                email: $('#emailSection')
+            };
+
+            $openBtn.on('click', function() {
+                $overlay.css('display', 'flex');
+                var scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
+                $('body').css('padding-right', scrollBarWidth > 0 ? scrollBarWidth + 'px' : '');
+                $('body').css('overflow', 'hidden');
+            });
+
+            $closeBtn.on('click', function() {
+                $overlay.css('display', 'none');
+                $('body').css('overflow', '');
+                $('body').css('padding-right', '');
+            });
+
+            $overlay.on('click', function(e) {
+                if (e.target === this) {
+                    $overlay.css('display', 'none');
+                    $('body').css('overflow', '');
+                    $('body').css('padding-right', '');
+                }
+            });
+
+            $navBtns.on('click', function() {
+                $navBtns.removeClass('active');
+                $(this).addClass('active');
+                var section = $(this).data('section');
+                $.each($sections, function(key, $el) {
+                    $el.css('display', (section === key) ? 'block' : 'none');
+                });
+            });
         
         loadLogs();
     });

@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/dashboard.css">
+    <link rel="stylesheet" href="assets/css/profile-modal.css">
+    <link rel="stylesheet" href="assets/css/logs.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>InternSync</title>
 </head>
 <body>
@@ -22,7 +25,7 @@
             </div>
         </div>
         <div class="nav-right">
-            <span class="user-name"><?=$_SESSION['name'];?></span>
+            <span class="user-name" id="openProfileModal"><?=$_SESSION['name'];?></span>
             <a href="?page=logout" class="logout-link">Logout</a>
         </div>
     </nav>
@@ -150,6 +153,47 @@
         </section>
     </main>
 
+    <?php include 'views/modal.php'; ?>
+
     <script src="assets/js/dashboard.js"></script>
+    <script>
+        const openBtn = document.getElementById('openProfileModal');
+        const overlay = document.getElementById('profileModalOverlay');
+        const closeBtn = document.getElementById('closeProfileModal');
+        const navBtns = document.querySelectorAll('.profile-nav-btn');
+        const sections = {
+            profile: document.getElementById('profileSection'),
+            password: document.getElementById('passwordSection'),
+            email: document.getElementById('emailSection')
+        };
+
+        openBtn.addEventListener('click', () => {
+            overlay.style.display = 'flex';
+            const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
+            document.body.style.paddingRight = scrollBarWidth > 0 ? scrollBarWidth + 'px' : '';
+            document.body.style.overflow = 'hidden';
+        });
+        closeBtn.addEventListener('click', () => {
+            overlay.style.display = 'none';
+            document.body.style.overflow = '';
+            document.body.style.paddingRight = '';
+        });
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) {
+                overlay.style.display = 'none';
+                document.body.style.overflow = '';
+                document.body.style.paddingRight = '';
+            }
+        });
+        navBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                navBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                Object.keys(sections).forEach(key => {
+                    sections[key].style.display = (btn.dataset.section === key) ? 'block' : 'none';
+                });
+            });
+        });
+    </script>
 </body>
 </html>
