@@ -11,4 +11,15 @@ class UserController extends User{
         require 'views/dashboard.php';
     }
 
+    public function update($data){
+        $fName = $data['firstName'];
+        $lName = $data['lastName'];
+
+        if(empty($fName) || empty($lName)){
+            echo json_encode(['status' => 'error', 'msg' => 'All fields are required!']);
+            exit();
+        }
+        echo $this->updateProfile($fName, $lName);
+        exit();
+    }
 }

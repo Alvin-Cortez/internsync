@@ -28,4 +28,15 @@ class User extends Db {
             'renderedPercent' => $percent
         ];
     }
+
+    protected function updateProfile($fName, $lName){
+        $stmt = $this->connect()->prepare('UPDATE users SET firstName = ?, lastName = ? WHERE id = ?');
+        $id = $_SESSION['user_id'];
+        if(!$stmt->execute([$fName, $lName, $id])){
+            echo json_encode(['status' => 'error', 'msg' => 'Unable to execute']);
+            exit();
+        }
+        echo json_encode(['status' => 'success', 'msg' => 'Profile updated successfully']);
+        exit();
+    }
 }

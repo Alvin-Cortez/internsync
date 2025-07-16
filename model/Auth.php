@@ -25,7 +25,9 @@ class Auth extends Db {
         }
 
         session_start();
-        $_SESSION['name'] = $userData['firstName'] . ' ' . $userData['lastName'];
+        $_SESSION['first_name'] = $userData['firstName'];
+        $_SESSION['last_name'] = $userData['lastName'];
+        $_SESSION['email'] = $userData['email'];
         $_SESSION['user_id'] = $userData['id'];
     }
 

@@ -16,18 +16,18 @@
                     <!-- Profile Section -->
                     <div class="profile-section" id="profileSection">
                         <h2>Profile Settings</h2>
-                        <form>
+                        <form id="profileForm">
                             <label for="firstName">First Name</label>
-                            <input type="text" id="firstName" value="John">
+                            <input type="text" id="firstName" name="firstName" value="<?php echo $_SESSION['first_name'] ?>">
                             <label for="lastName">Last Name</label>
-                            <input type="text" id="lastName" value="Smith">
-                            <button type="button" class="profile-save-btn">Save Changes</button>
+                            <input type="text" id="lastName" name="lastName" value="<?php echo $_SESSION['last_name'] ?>">
+                            <button type="submit" class="profile-save-btn">Save Changes</button>
                         </form>
                     </div>
                     <!-- Password Section -->
                     <div class="profile-section" id="passwordSection" style="display:none;">
                         <h2>Change Password</h2>
-                        <form>
+                        <form id="passwordForm">
                             <label for="currentPassword">Current Password</label>
                             <input type="password" id="currentPassword">
                             <label for="newPassword">New Password</label>
@@ -40,9 +40,9 @@
                     <!-- Email Section -->
                     <div class="profile-section" id="emailSection" style="display:none;">
                         <h2>Change Email</h2>
-                        <form>
+                        <form id="emailForm">
                             <label for="currentEmail">Current Email</label>
-                            <input type="email" id="currentEmail" value="john.smith@example.com" readonly>
+                            <input type="email" id="currentEmail" value="<?= $_SESSION['email'] ?>" readonly>
                             <label for="newEmail">New Email</label>
                             <input type="email" id="newEmail">
                             <label for="emailPassword">Password</label>

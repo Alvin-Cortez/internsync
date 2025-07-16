@@ -67,6 +67,12 @@ switch ($page) {
             break;
         }
         break;
+    case 'update-profile':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $user->update($_POST);
+            break;
+        }
+        break;
     default:
         echo "404 Not Found";
 }

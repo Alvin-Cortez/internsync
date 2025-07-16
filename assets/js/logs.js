@@ -1,5 +1,7 @@
     $(document).ready(function () {
         let currentQuery = ""
+
+        //Load logs on page load
         function loadLogs(page = 1){
             $.ajax({
                 type: "GET",
@@ -17,6 +19,7 @@
             });
         }
 
+        //Search logs
         function searchLogs(query, page = 1){
             $.ajax({
                 type: "GET",
@@ -31,6 +34,7 @@
             });
         }
 
+        // Render pagination buttons
         function renderPagination(currentPage, totalPages, isSearch){
             let html = '';
             if (currentPage > 1) {
@@ -57,6 +61,7 @@
             return html;
         }
 
+        // Pagination buttons and search input
         $(document).on('click', '.page-btn', function () {
             const page = $(this).data('page');
             const isSearch = $(this).data('search');
@@ -67,6 +72,7 @@
             }
         });
 
+        //Typing in search input
         $(document).on('keyup', '#search', function () {
             const query = $(this).val().trim();
             currentQuery = query;
@@ -77,12 +83,12 @@
             }
         });
 
-
+        // Add Modal
         $('.logs-add-btn').on('click', function () {
             $('#addActivityModal').addClass('show').css('display', 'flex');
         });
 
-
+        // Edit Modal
         $(document).on('click', '.logs-edit', function () {
             const row = $(this).closest('tr');
             $('#editActivityModal').addClass('show').css('display', 'flex');
@@ -93,13 +99,55 @@
             $('#edit-log-id').val(row.data('id'));
         });
 
+        // Profile Section modal
+        var $openBtn = $('#openProfileModal');
+        var $overlay = $('#profileModalOverlay');
+        var $closeBtn = $('#closeProfileModal');
+        var $navBtns = $('.profile-nav-btn');
+        var $sections = {
+            profile: $('#profileSection'),
+            password: $('#passwordSection'),
+            email: $('#emailSection')
+        };
 
+        $openBtn.on('click', function() {
+            $overlay.css('display', 'flex');
+            var scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
+            $('body').css('padding-right', scrollBarWidth > 0 ? scrollBarWidth + 'px' : '');
+            $('body').css('overflow', 'hidden');
+        });
+
+        $closeBtn.on('click', function() {
+            $overlay.css('display', 'none');
+            $('body').css('overflow', '');
+            $('body').css('padding-right', '');
+        });
+
+        $overlay.on('click', function(e) {
+            if (e.target === this) {
+                $overlay.css('display', 'none');
+                $('body').css('overflow', '');
+                $('body').css('padding-right', '');
+            }
+        });
+
+        $navBtns.on('click', function() {
+            $navBtns.removeClass('active');
+            $(this).addClass('active');
+            var section = $(this).data('section');
+            $.each($sections, function(key, $el) {
+                $el.css('display', (section === key) ? 'block' : 'none');
+            });
+        });
+
+        // Close Modals
         $('#closeAddModal, #closeEditModal, .modal-close, .modal-cancel, .edit-cancel, .modal-btn').on('click', function () {
             $('#addActivityModal').removeClass('show').css('display', 'none');
             $('#editActivityModal').removeClass('show').css('display', 'none');
             $('#modal-delete').removeClass('show').css('display', 'none');
         });
 
+        // Form submission for Add modal
         $('#modal-add').on('submit', function (e) {
             e.preventDefault();
             $.ajax({
@@ -116,6 +164,7 @@
             });
         });
 
+        // Form submission for Edit modal
         $('#modal-edit').on('submit', function (e){ 
             e.preventDefault();
             $.ajax({
@@ -139,13 +188,14 @@
             });
         });
 
-
+        // Delete Modal
         $(document).on('click', '.logs-delete', function () {
             const id = $(this).data('id');
             $('#confirm-delete').data('id', id);
             $('#modal-delete').addClass('show').css('display', 'flex');
         });
 
+        // Confirm Delete
         $('#confirm-delete').on('click', function (e) {
             e.preventDefault();
             const id = $(this).data('id');
@@ -162,6 +212,36 @@
             });
         });
 
+        //Edit Profile
+        $('#profileForm').submit(function (e) { 
+            e.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: "http://localhost/internsync/index.php?page=update-profile",
+                data: $(this).serialize(),
+                dataType: 'json',
+                success: function (response) {
+                    if (typeof response === 'string') {
+                        try {
+                            response = JSON.parse(response);
+                        } catch (e) {
+                            showToast({ type: response.status, message: response.msg });
+                            return;
+                        }
+                    }
+                    showToast({ type: response.status, message: response.msg || 'No message.' });
+                    if (response.status === 'success') {
+                        $('#profileModalOverlay').css('display', 'none');
+                        $('#profileForm')[0].reset();
+                    }
+                },
+                error: function () {
+                    showToast({ type: response.status, message: 'AJAX error.' });
+                }
+            });
+        });
+
+        // Show Toast
         function showToast({ type = "info", message = "" }) {
             const toast = $(`
                 <div class="toast toast-${type}">
@@ -186,46 +266,6 @@
 
         $('#progressBar').css('stroke-dashoffset', offset);
         $('#progressText').text(renderedPercent + '%');
-
-        var $openBtn = $('#openProfileModal');
-            var $overlay = $('#profileModalOverlay');
-            var $closeBtn = $('#closeProfileModal');
-            var $navBtns = $('.profile-nav-btn');
-            var $sections = {
-                profile: $('#profileSection'),
-                password: $('#passwordSection'),
-                email: $('#emailSection')
-            };
-
-            $openBtn.on('click', function() {
-                $overlay.css('display', 'flex');
-                var scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
-                $('body').css('padding-right', scrollBarWidth > 0 ? scrollBarWidth + 'px' : '');
-                $('body').css('overflow', 'hidden');
-            });
-
-            $closeBtn.on('click', function() {
-                $overlay.css('display', 'none');
-                $('body').css('overflow', '');
-                $('body').css('padding-right', '');
-            });
-
-            $overlay.on('click', function(e) {
-                if (e.target === this) {
-                    $overlay.css('display', 'none');
-                    $('body').css('overflow', '');
-                    $('body').css('padding-right', '');
-                }
-            });
-
-            $navBtns.on('click', function() {
-                $navBtns.removeClass('active');
-                $(this).addClass('active');
-                var section = $(this).data('section');
-                $.each($sections, function(key, $el) {
-                    $el.css('display', (section === key) ? 'block' : 'none');
-                });
-            });
         
         loadLogs();
     });
