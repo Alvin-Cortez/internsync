@@ -36,7 +36,7 @@ class UserController extends User{
 
         if(empty($currrentPass) || empty($newPass) || empty($confirmPass)){
             echo json_encode([
-                'status' => 'error',
+                'status' => 'error-all',
                 'msg' => 'All fields are required!'
             ]);
             exit();

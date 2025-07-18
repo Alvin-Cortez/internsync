@@ -257,13 +257,28 @@
                             return;
                         }
                     }
-                    if(response.status === 'success'){
+                    if(response.status === 'error-all'){
+                        $("#currentPassword, #newPassword, #confirmPassword").css("border-color", "#ff0000d2");
+                        $("#currentPassword, #newPassword, #confirmPassword").blur(function () {
+                            $(this).css("border-color", "");
+                        });
+                        showToast({ type: 'error', message: response.msg});
+                    }
+                    else if(response.status === 'error-current') {
+                        $("#currentPassword").css("border-color", "#ff0000d2");
+                        $("#currentPassword").blur(function () {
+                            $(this).css("border-color", "");
+                        });
+                        showToast({ type: 'error', message: response.msg});
+                    } else if(response.status === 'error-pass') {
+                        $("#newPassword, #confirmPassword").css("border-color", "#ff0000d2");
+                        $("#newPassword, #confirmPassword").blur(function () {
+                            $(this).css("border-color", "");
+                        });
+                        showToast({ type: 'error', message: response.msg});
+                    } else if(response.status === 'success'){
                         $('#passwordForm')[0].reset();
                         showToast({ type: response.status, message: response.msg});
-                    }
-                    else {
-                        showToast({ type: response.status, message: response.msg});
-                        
                     }
                 }
             });

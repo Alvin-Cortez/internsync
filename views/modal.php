@@ -3,8 +3,8 @@
             <div class="profile-modal">
                 <div class="profile-modal-sidebar">
                     <div class="profile-user-info">
-                        <div class="profile-user-name">John Smith</div>
-                        <div class="profile-user-email">john.smith@example.com</div>
+                        <div class="profile-user-name"><?= $userProfile['firstName'] . ' ' . $userProfile['lastName']?></div>
+                        <div class="profile-user-email"><?= $userProfile['email'] ?></div>
                     </div>
                     <div class="profile-modal-nav">
                         <button class="profile-nav-btn active" data-section="profile"><span class="profile-nav-icon"><i class="fa-regular fa-user"></i></span> Profile</button>
@@ -18,9 +18,9 @@
                         <h2>Profile Settings</h2>
                         <form id="profileForm">
                             <label for="firstName">First Name</label>
-                            <input type="text" id="firstName" name="firstName" value="<?= $userProfile['firstName']; ?>">
+                            <input type="text" id="firstName" name="firstName" value="<?= $userProfile['firstName'] ?>">
                             <label for="lastName">Last Name</label>
-                            <input type="text" id="lastName" name="lastName" value="<?= $userProfile['lastName']; ?>">
+                            <input type="text" id="lastName" name="lastName" value="<?= $userProfile['lastName'] ?>">
                             <button type="submit" class="profile-save-btn">Save Changes</button>
                         </form>
                     </div>  
@@ -42,7 +42,7 @@
                         <h2>Change Email</h2>
                         <form id="emailForm">
                             <label for="currentEmail">Current Email</label>
-                            <input type="email" id="currentEmail" value="<?= $_SESSION['email'] ?>" readonly>
+                            <input type="email" id="currentEmail" value="<?= $userProfile['email'] ?>" readonly>
                             <label for="newEmail">New Email</label>
                             <input type="email" id="newEmail">
                             <label for="emailPassword">Password</label>

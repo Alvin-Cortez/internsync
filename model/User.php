@@ -72,19 +72,13 @@ class User extends Db {
         $currentPass = $_POST['currentPassword'];
 
         if(!password_verify($currentPass, $user['password'])){
-            echo json_encode([
-                'status' => 'error',
-                'msg' => 'Current password is incorrent!'
-            ]);
+            echo json_encode(['status' => 'error-current', 'msg' => 'Current password is incorrent!']);
             exit();
             $stmt = null;
         }
 
         if($_POST['newPassword'] !== $_POST['confirmPassword']){
-            echo json_encode([
-                'status' => 'error',
-                'msg' => 'Passwords did not match'
-            ]);
+            echo json_encode(['status' => 'error-pass', 'msg' => 'Passwords did not match']);
             exit();
             $stmt = null;
         }
@@ -97,10 +91,7 @@ class User extends Db {
             exit();
         }
 
-        echo json_encode([
-            'status' => 'success',
-            'msg' => 'Password updated successfully!'
-        ]);
+        echo json_encode(['status' => 'success', 'msg' => 'Password updated successfully!']);
         exit();
     }
 }
