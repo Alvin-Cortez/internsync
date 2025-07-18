@@ -25,7 +25,7 @@
             </div>
         </div>
         <div class="nav-right">
-            <span class="user-name" id="openProfileModal"><?=$_SESSION['first_name']. ' ' . $_SESSION['last_name']?></span>
+            <span class="user-name" id="openProfileModal"><?=$userProfile['firstName']. ' ' . $userProfile['lastName']?></span>
             <a href="?page=logout" class="logout-link">Logout</a>
         </div>
     </nav>

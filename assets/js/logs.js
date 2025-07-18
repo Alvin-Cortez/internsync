@@ -241,6 +241,34 @@
             });
         });
 
+        $('#passwordForm').submit(function (e) { 
+            e.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: "http://localhost/internsync/index.php?page=change-password",
+                data: $(this).serialize(),
+                dataType: "json",
+                success: function (response) {
+                    if(typeof response === 'string'){
+                        try {
+                            response = JSON.parse(response);
+                        } catch(e){
+                            showToast({ type: response.status, message: response.msg});
+                            return;
+                        }
+                    }
+                    if(response.status === 'success'){
+                        $('#passwordForm')[0].reset();
+                        showToast({ type: response.status, message: response.msg});
+                    }
+                    else {
+                        showToast({ type: response.status, message: response.msg});
+                        
+                    }
+                }
+            });
+        });
+
         // Show Toast
         function showToast({ type = "info", message = "" }) {
             const toast = $(`

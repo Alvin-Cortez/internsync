@@ -1,6 +1,7 @@
 <?php
 
 require_once 'model/Logs.php';
+require_once 'model/User.php';
 
 class UserController extends User{
 
@@ -9,6 +10,11 @@ class UserController extends User{
         $logs = new Logs();
         $tasks = $logs->showRecentLogs();
         require 'views/dashboard.php';
+    }
+
+    public function profile(){
+        $userProfile = $this->getUserProfile();
+        require 'views/logs.php';
     }
 
     public function update($data){
@@ -21,5 +27,21 @@ class UserController extends User{
         }
         echo $this->updateProfile($fName, $lName);
         exit();
+    }
+
+    public function updatePassword($data){
+        $currrentPass = $data['currentPassword'];
+        $newPass = $data['newPassword'];
+        $confirmPass = $data['confirmPassword'];
+
+        if(empty($currrentPass) || empty($newPass) || empty($confirmPass)){
+            echo json_encode([
+                'status' => 'error',
+                'msg' => 'All fields are required!'
+            ]);
+            exit();
+        }
+
+        return $this->changePassword($currrentPass, $newPass, $confirmPass);
     }
 }

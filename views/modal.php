@@ -18,23 +18,23 @@
                         <h2>Profile Settings</h2>
                         <form id="profileForm">
                             <label for="firstName">First Name</label>
-                            <input type="text" id="firstName" name="firstName" value="<?php echo $_SESSION['first_name'] ?>">
+                            <input type="text" id="firstName" name="firstName" value="<?= $userProfile['firstName']; ?>">
                             <label for="lastName">Last Name</label>
-                            <input type="text" id="lastName" name="lastName" value="<?php echo $_SESSION['last_name'] ?>">
+                            <input type="text" id="lastName" name="lastName" value="<?= $userProfile['lastName']; ?>">
                             <button type="submit" class="profile-save-btn">Save Changes</button>
                         </form>
-                    </div>
+                    </div>  
                     <!-- Password Section -->
                     <div class="profile-section" id="passwordSection" style="display:none;">
                         <h2>Change Password</h2>
                         <form id="passwordForm">
                             <label for="currentPassword">Current Password</label>
-                            <input type="password" id="currentPassword">
+                            <input type="password" name="currentPassword" id="currentPassword">
                             <label for="newPassword">New Password</label>
-                            <input type="password" id="newPassword">
+                            <input type="password" name="newPassword" id="newPassword">
                             <label for="confirmPassword">Confirm New Password</label>
-                            <input type="password" id="confirmPassword">
-                            <button type="button" class="profile-save-btn">Update Password</button>
+                            <input type="password" name="confirmPassword" id="confirmPassword">
+                            <button type="submit" class="profile-save-btn">Update Password</button>
                         </form>
                     </div>
                     <!-- Email Section -->

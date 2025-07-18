@@ -26,7 +26,7 @@ switch ($page) {
         $user->dashboard();
         break;
     case 'logs':
-        require 'views/logs.php';
+        $user->profile();
         break;
     case 'signin':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -70,6 +70,12 @@ switch ($page) {
     case 'update-profile':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $user->update($_POST);
+            break;
+        }
+        break;
+    case 'change-password':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $user->updatePassword($_POST);
             break;
         }
         break;
