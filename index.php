@@ -79,6 +79,12 @@ switch ($page) {
             break;
         }
         break;
+    case 'change-email':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $user->updateEmail($_POST);
+            break;
+        }
+        break;
     default:
         echo "404 Not Found";
 }

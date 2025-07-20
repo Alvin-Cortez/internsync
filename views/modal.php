@@ -44,10 +44,10 @@
                             <label for="currentEmail">Current Email</label>
                             <input type="email" id="currentEmail" value="<?= $userProfile['email'] ?>" readonly>
                             <label for="newEmail">New Email</label>
-                            <input type="email" id="newEmail">
+                            <input type="email" name="newEmail" id="newEmail">
                             <label for="emailPassword">Password</label>
-                            <input type="password" id="emailPassword">
-                            <button type="button" class="profile-save-btn">Update Email</button>
+                            <input type="password" name="emailPass" id="emailPassword">
+                            <button type="submit" class="profile-save-btn">Update Email</button>
                         </form>
                     </div>
                 </div>

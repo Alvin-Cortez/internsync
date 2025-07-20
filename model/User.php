@@ -72,15 +72,13 @@ class User extends Db {
         $currentPass = $_POST['currentPassword'];
 
         if(!password_verify($currentPass, $user['password'])){
-            echo json_encode(['status' => 'error-current', 'msg' => 'Current password is incorrent!']);
+            echo json_encode(['status' => 'error-current', 'msg' => 'Current password is incorrect!']);
             exit();
-            $stmt = null;
         }
 
         if($_POST['newPassword'] !== $_POST['confirmPassword']){
             echo json_encode(['status' => 'error-pass', 'msg' => 'Passwords did not match']);
             exit();
-            $stmt = null;
         }
 
         $hashedPass = password_hash($_POST['newPassword'], PASSWORD_DEFAULT);
@@ -92,6 +90,43 @@ class User extends Db {
         }
 
         echo json_encode(['status' => 'success', 'msg' => 'Password updated successfully!']);
+        exit();
+    }
+
+    protected function changeEmail($email, $pass){
+        $stmt = $this->connect()->prepare('SELECT email, password FROM users WHERE id = ?');
+        $id = $_SESSION['user_id'];
+        if(!$stmt->execute([$id])){
+            echo json_encode(['status' => 'error', 'msg' => 'Unable to execute']);
+            exit();
+        }
+
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if($user['email'] == $email){
+            echo json_encode(['status' => 'error-same', 'msg' => 'You already using this email']);
+            exit();
+        }
+
+        if(!password_verify($pass, $user['password'])){
+            echo json_encode(['status' => 'error-pass', 'msg' => 'Incorrect password!']);
+            exit();
+        }
+
+        $emailStmt = $this->connect()->prepare('SELECT email FROM users WHERE email = ? AND id != ?');
+        $emailStmt->execute([$email, $id]);
+        if($emailStmt->rowCount() > 0){
+            echo json_encode(['status' => 'error-avail', 'msg' => 'Email is already used by another user']);
+            exit();
+        }
+
+        $updateStmt = $this->connect()->prepare('UPDATE users SET email = ? WHERE id = ?');
+        if(!$updateStmt->execute([$email, $id])){
+            echo json_encode(['status' => 'error', 'msg' => 'Unable to update email']);
+            exit();
+        }
+
+        echo json_encode(['status' => 'success', 'msg' => 'Email updated successfully!']);
         exit();
     }
 }

@@ -44,4 +44,16 @@ class UserController extends User{
 
         return $this->changePassword($currrentPass, $newPass, $confirmPass);
     }
+
+    public function updateEmail($data){
+        $email = $data['newEmail'];
+        $pass = $data['emailPass'];
+
+        if(empty($email) || empty($pass)){
+            echo json_encode(['status' => 'error-all', 'msg' => 'All fields are required!']);
+            exit();
+        }
+
+        return $this->changeEmail($email, $pass);
+    }
 }

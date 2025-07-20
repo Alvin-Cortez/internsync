@@ -241,6 +241,7 @@
             });
         });
 
+        //Change password
         $('#passwordForm').submit(function (e) { 
             e.preventDefault();
             $.ajax({
@@ -279,6 +280,68 @@
                     } else if(response.status === 'success'){
                         $('#passwordForm')[0].reset();
                         showToast({ type: response.status, message: response.msg});
+                    }
+                }
+            });
+        });
+
+        //Change email
+        $('#emailForm').submit(function (e) { 
+            e.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: "http://localhost/internsync/index.php?page=change-email",
+                data: $(this).serialize(),
+                dataType: "json",
+                success: function (response) {
+                    if(typeof response === 'string'){
+                        try {
+                            response = JSON.parse(response);
+                        } catch(e){
+                            showToast({ type: response.status, message: response.msg});
+                            return;
+                        }
+                    }
+
+                    switch(response.status){
+                        case 'error':
+                            showToast({ type: response.status, message: response.msg});
+                            break;
+                        case 'error-all':
+                            showToast({ type: 'error', message: response.msg});
+                            $("#newEmail, #emailPassword").css("border-color", "#ff0000d2");
+                            $("#newEmail, #emailPassword").blur(function () {
+                                $(this).css("border-color", "");
+                            });
+                            break;
+                        case 'error-same':
+                            showToast({ type: 'error', message: response.msg});
+                            $("#newEmail").css("border-color", "#ff0000d2");
+                            $("#newEmail").blur(function () {
+                                $(this).css("border-color", "");
+                            });
+                            break;
+                        case 'error-pass':
+                            showToast({ type: 'error', message: response.msg});
+                            $("#emailPassword").css("border-color", "#ff0000d2");
+                            $("#emailPassword").blur(function () {
+                                $(this).css("border-color", "");
+                            });
+                            break;
+                        case 'error-avail':
+                            showToast({ type: 'error', message: response.msg});
+                            $("#newEmail").css("border-color", "#ff0000d2");
+                            $("#newEmail").blur(function () {
+                                $(this).css("border-color", "");
+                            });
+                            break;
+                        case 'success':
+                            showToast({ type: response.status, message: response.msg});
+                            $('#emailForm')[0].reset();
+                            break;
+                        default:
+                            showToast({ type: 'error', message: 'Error'});  
+                            break;
                     }
                 }
             });
